@@ -1,0 +1,26 @@
+Type: art::TTelescopeParameter
+Contents:
+  prm_tel6:
+    TelescopeID: 6
+    EdetNum: 1
+    dESize: #no use
+    - 50.0
+    - 50.0
+    dEStripNum: #no use
+    - 16
+    - 16
+    dEIsDSSD: 1
+#    dEXEnergyThreshold: 0.542 
+    dEXEnergyThreshold: 0.0 
+    dEYEnergyThreshold: 0.0
+    EnergyThreshold_b: 0.593   
+    EnergyThreshold_c: 0.0   
+    EnergyThreshold_d: 0.0   
+    # z_ref, distance, angle(degree)
+    Geometry: #no use 
+    - 0.0
+    - 184.0 
+    - 75.0
+    #dE_dE_TimeRange: [-12000.0, 12000.0] #min, max  no use
+    #dE_E_TimeRange:  [-12000.0, 12000.0] #min, max  no use
+#---------------------------------

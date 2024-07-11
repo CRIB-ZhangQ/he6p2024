@@ -1,0 +1,27 @@
+anchor:
+  - &tel1_dEX ["PRA.fdEX", 500, 0., 30.]
+  - &tel1_Angle_cm ["PRA.fTheta_cm",180, 0., 180.]
+  - &tel1_Angle_lab ["PRA.fTheta_lab", 90, 0., 90.]
+  - &tel1_Etotal ["PRA.fEtotal", 500, 0., 30.]
+
+
+group:
+  - name: tel1
+    title: tel1
+    contents:
+      - name: dEX vs Etotal
+        title: tel1_dEX_E
+        x: *tel1_dEX
+        y: *tel1_Etotal
+
+      - name: Angle_cm vs Etotal
+        title: tel1_theta_cm
+        x: *tel1_Angle_cm
+        y: *tel1_Etotal
+        cut: tel1protonEA_cm
+
+      - name: Angle_lab vs Etotal
+        title: tel1_theta_lab
+        x: *tel1_Angle_lab
+        y: *tel1_Etotal
+        cut: tel1protonEA_lab

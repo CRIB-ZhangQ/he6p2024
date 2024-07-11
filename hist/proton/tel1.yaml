@@ -1,0 +1,46 @@
+anchor:
+  - &tel1_dEX ["PRA.fdEX", 300, 0., 12.]
+  - &tel1_Angle_cm ["PRA.fTheta_cm",90, 0., 180.]
+  - &tel1_Angle_lab ["PRA.fTheta_lab", 90, 0., 90.]
+  - &tel1_Etotal ["PRA.fEtotal", 300, 0., 50.]
+  - &tel1_Etotal_proton ["PRA.fEtotal", 300, 0., 30.]
+
+
+group:
+  - name: tel1
+    title: tel1
+    contents:
+      - name: tel1_dEX_E 
+        title: tel1_dEX_E
+        x: *tel1_dEX
+        y: *tel1_Etotal
+        #cut: tel1dE_cut
+
+      - name: tel1_energy_theta_lab 
+        title: tel1_energy_theta_lab
+        x: *tel1_Angle_lab
+        y: *tel1_Etotal_proton
+        cut: tel1dE_cut && tel1EA_cut
+
+      - name: tel1_energy_theta_cm 
+        title: tel1_energy_theta_cm
+        x: *tel1_Angle_cm
+        y: *tel1_Etotal_proton
+        cut: tel1dE_cut && tel1EA_cut
+
+      - name: tel1_theta_lab_raw
+        title: tel1_theta_lab_raw
+        x: *tel1_Angle_lab
+        y: *tel1_Etotal_proton
+        cut: tel1dE_cut
+
+      - name: tel1_theta_lab
+        title: tel1_theta_lab
+        x: *tel1_Angle_lab
+        cut: tel1dE_cut && tel1EA_cut
+
+      - name: tel1_theta_cm 
+        title: tel1_theta_cm
+        x: *tel1_Angle_cm
+        cut: tel1dE_cut && tel1EA_cut
+

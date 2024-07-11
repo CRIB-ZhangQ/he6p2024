@@ -1,0 +1,12 @@
+Anchor:
+  - &input ridf/@NAME@@NUM@.ridf
+  - &output output/@NAME@/@NUM@/chkpid@NAME@@NUM@.root
+  - &histout output/@NAME@/@NUM@/chkpid@NAME@@NUM@.hist.root
+
+Processor:
+  - name: pid
+    type: art::TCRIBPIDProcessor
+    parameter:
+      FileName: prm/pid/he6p2024.yaml
+      Batch: false
+      OutputTransparency: 1

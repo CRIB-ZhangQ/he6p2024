@@ -1,0 +1,38 @@
+Anchor:
+
+ - &input ridf/@NAME@@NUM@.ridf
+ - &output output/@NAME@/@NUM@/chktrig@NAME@@NUM@.root
+ - &histout output/@NAME@/@NUM@/chktrig@NAME@@NUM@.hist.root
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: ridf
+    type: art::TRIDFEventStore
+    parameter:
+      OutputTransparency: 1
+      InputFiles:
+        - *input
+      SHMID: 0
+
+  - name: mapper
+    type: art::TMappingProcessor
+    parameter:
+      OutputTransparency: 1
+
+  - include: trig/trigger.yaml
+
+
+# F3 Hist (include important information)
+#  - name: projection_f3_all_detector
+#    type: art::TTreeProjectionProcessor
+#    parameter:
+#      FileName: hist/f3/f3_mwdc.yaml
+#      Type:     art::TTreeProjection
+
+  - name: outputtree
+    type: art::TOutputTreeProcessor
+    parameter:
+      FileName:
+        - *output

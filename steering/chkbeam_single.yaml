@@ -1,0 +1,47 @@
+Anchor:
+
+ - &input ridf/@NAME@@NUM@.ridf
+ - &output output/single/gate/phyrun/@NAME@@NUM@.root
+ #- &output output/single/gate/bgrun/@NAME@@NUM@.root
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: ridf
+    type: art::TRIDFEventStore
+    parameter:
+      OutputTransparency: 1
+      #MaxEventNum: 10000000
+      InputFiles:
+        - *input
+      SHMID: 0
+
+  - name: mapper
+    type: art::TMappingProcessor
+    parameter:
+      OutputTransparency: 1
+
+  - name: detector_initialize
+    type: art::TUserGeoInitializer
+    parameter:
+      FileName: prm/geo/he6p2024.yaml
+      #Visible: false
+      OutputTransparency: 1
+
+  - include: tref.yaml
+  - include: rf/rf.yaml
+  - include: coin/coin.yaml
+  - include: mwdc/mwdc_crib_single.yaml
+  - include: scaler/scaler.yaml
+#  - include: trig/trigger.yaml
+
+
+# gate: rf, beam_single, catha, cathb, mwdca, mwdcb, tof, F3target
+  - include: gate/single/he6p.yaml
+
+  - name: outputtree
+    type: art::TOutputTreeProcessor
+    parameter:
+      FileName:
+        - *output

@@ -1,0 +1,65 @@
+Anchor:
+ - &input output/coin/gate/@NAME@@NUM@.root
+ - &output output/coin/gate/proton/@NAME@@NUM@_proton.root
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: root_eventstore
+    type: art::TTreeEventStore
+    parameter:
+      OutputTransparency: 1
+      FileName: *input
+      TreeName: tree
+
+# telescope 1
+  - include:
+      name: procproton.yaml 
+      replace:
+        TEL_NAME: tel1
+        fPRA: fPRA1 
+
+## telescope 2
+#  - include:
+#      name: procproton.yaml 
+#      replace:
+#        TEL_NAME: tel2
+#        fPRA: fPRA2 
+#
+## telescope 3
+#  - include:
+#      name: procproton.yaml 
+#      replace:
+#        TEL_NAME: tel3
+#        fPRA: fPRA3 
+#
+## telescope 4
+#  - include:
+#      name: procproton.yaml 
+#      replace:
+#        TEL_NAME: tel4
+#        fPRA: fPRA4 
+#
+## telescope 5 
+#  - include:
+#      name: procproton.yaml 
+#      replace:
+#        TEL_NAME: tel5
+#        fPRA: fPRA5 
+#
+## telescope 6
+#  - include:
+#      name: procproton.yaml 
+#      replace:
+#        TEL_NAME: tel6
+#        fPRA: fPRA6 
+
+  - include: gate/coin/proton/tel1.yaml
+
+
+  - name: outputtree
+    type: art::TOutputTreeProcessor
+    parameter:
+      FileName:
+        - *output

@@ -1,0 +1,18 @@
+#test
+Processor:
+# telescope 1
+  - include:
+      name: tel.inc.yaml
+      replace:
+        NAME: tel1
+        CATID_dEX: 10
+        CATID_dEY: 11
+        CATID_E:   12
+
+  - name: proc_@NAME@_E_ch2MeV
+  type: art::TParameterArrayLoader
+  parameter:
+    Name: prm_@NAME@_E_ch2MeV
+    Type: art::THogeParameter
+    FileName: prm/ssd/@NAME@/ch2MeV_E.dat
+    OutputTransparency: 0
