@@ -1,0 +1,164 @@
+set(CRIBLIB_NAME crib)
+
+set(CRIBSOURCES
+    TF1PPACProcessor.cc
+    TTimingChargeAllMappingProcessor.cc
+    TTimingDataMappingProcessor.cc
+    TBranchCopyProcessor.cc
+    TEvtNumProcessor.cc
+    TReadROOTFile.cc
+    TTreePeriodicEventStore.cc
+    TModuleData.cc
+    TSegmentOutputProcessor.cc
+    # mux
+    mux/TMUXCalibrationProcessor.cc
+    mux/TMUXData.cc
+    mux/TMUXDataMappingProcessor.cc
+    mux/TMUXPositionConverter.cc
+    mux/TMUXPositionValidator.cc
+    # telescope
+    telescope/TTelescopeData.cc
+    telescope/TTelescopeProcessor.cc
+    #telescope/TTelescopeParameter.cc
+    # tgtik
+    #tgtik/TTGTIKData.cc
+    #tgtik/TTGTIKPrepData.cc
+    #tgtik/TTGTIKPrepProcessor.cc
+    tgtik/TTGTIKProcessor.cc
+    tgtik/TEffectiveThickness.cc
+    # commands
+    commands/TCatCmdLoopStart.cc
+    commands/TCatCmdLoopStop.cc
+    commands/TCmdXfitg.cc
+    commands/TCmdXstatus.cc
+    commands/TCmdXYblow.cc
+    commands/TCmdXblow.cc
+    commands/TCatCmdTCutG.cc
+    commands/TCmdErase.cc
+    commands/TCmdDraw.cc
+    # geo
+    geo/TUserGeoInitializer.cc
+    geo/TDetectorParameter.cc
+    geo/TTargetParameter.cc
+    ## simulation
+    simulation/TDetectParticleProcessor.cc
+    simulation/TNBodyReactionProcessor.cc
+    simulation/TParticleInfo.cc
+    simulation/TRandomBeamGenerator.cc
+    simulation/TTreeBeamGenerator.cc
+    simulation/TReactionInfo.cc
+    simulation/TSolidAngleProcessor.cc
+    #simulation/TTwoBodyScattering.cc
+    simulation/TCRIBPIDProcessor.cc
+    ## timestamp
+    timestamp/TTSData.cc
+    timestamp/TTSMappingProcessor.cc
+    timestamp/TModuleDecoderTimestamp.cc
+)
+
+set(CRIBHEADERS
+    TF1PPACProcessor.h
+    TTimingChargeAllMappingProcessor.h
+    TTimingDataMappingProcessor.h
+    TBranchCopyProcessor.h
+    TEvtNumProcessor.h
+    TReadROOTFile.h
+    TTreePeriodicEventStore.h
+    TModuleData.h
+    TSegmentOutputProcessor.h
+    # mux
+    mux/TMUXCalibrationProcessor.h
+    mux/TMUXData.h
+    mux/TMUXDataMappingProcessor.h
+    mux/TMUXPositionConverter.h
+    mux/TMUXPositionValidator.h
+    # telescope
+    telescope/TTelescopeData.h
+    telescope/TTelescopeProcessor.h
+    #telescope/TTelescopeParameter.h
+    # tgtik
+    #tgtik/TTGTIKData.h
+    #tgtik/TTGTIKPrepData.h
+    #tgtik/TTGTIKPrepProcessor.h
+    tgtik/TTGTIKProcessor.h
+    tgtik/TEffectiveThickness.h
+    # commands
+    commands/TCatCmdLoopStart.h
+    commands/TCatCmdLoopStop.h
+    commands/TCmdXfitg.h
+    commands/TCmdXstatus.h
+    commands/TCmdXYblow.h
+    commands/TCmdXblow.h
+    commands/TCatCmdTCutG.h
+    commands/TCmdErase.h
+    commands/TCmdDraw.h
+    # geo
+    geo/TUserGeoInitializer.h
+    geo/TDetectorParameter.h
+    geo/TTargetParameter.h
+    # simulation
+    simulation/TDetectParticleProcessor.h
+    simulation/TNBodyReactionProcessor.h
+    simulation/TParticleInfo.h
+    simulation/TRandomBeamGenerator.h
+    simulation/TTreeBeamGenerator.h
+    simulation/TReactionInfo.h
+    simulation/TSolidAngleProcessor.h
+    #simulation/TTwoBodyScattering.h
+    simulation/TCRIBPIDProcessor.h
+    ## timestamp
+    timestamp/TTSData.h
+    timestamp/TTSMappingProcessor.h
+    timestamp/TModuleDecoderTimestamp.h
+)
+
+add_library(${CRIBLIB_NAME} SHARED ${CRIBSOURCES})
+
+target_include_directories(${CRIBLIB_NAME}
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<INSTALL_INTERFACE:include>
+)
+
+target_link_libraries(${CRIBLIB_NAME}
+    PRIVATE
+        ${ROOT_LIBRARIES}
+        ${YAML_CPP_LIBRARIES}
+        artemis::catcore
+        artemis::catloop
+        artemis::artcont
+        artemis::catcmd
+        artemis::catmc
+        artemis::artdecoder
+        artemis::artridf
+        artemis::artrdf
+        artemis::arthist
+        artemis::artparam
+        artemis::artshare
+        artemis::CAT
+        SRIMlib
+)
+
+ROOT_GENERATE_DICTIONARY(G__${CRIBLIB_NAME}
+    ${CRIBHEADERS}
+    LINKDEF "artcrib_linkdef.h"
+    MODULE ${CRIBLIB_NAME}
+)
+
+set_target_properties(
+    ${CRIBLIB_NAME}
+    PROPERTIES
+        PUBLIC_HEADER "${CRIBHEADERS}"
+)
+
+install(TARGETS ${CRIBLIB_NAME}
+    EXPORT cribTargets
+    INCLUDES DESTINATION include
+    ARCHIVE DESTINATION lib
+    PUBLIC_HEADER DESTINATION include/src-crib
+    LIBRARY DESTINATION lib
+)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lib${CRIBLIB_NAME}_rdict.pcm
+    DESTINATION lib
+)

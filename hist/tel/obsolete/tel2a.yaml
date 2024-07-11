@@ -1,0 +1,96 @@
+anchor:
+  - &ex_raw ["tel2dEX_raw.fCharge",1024,0.,4095.]
+  - &ey_raw ["tel2dEY_raw.fCharge",1024,0.,4095.]
+  - &t_raw ["tel2dEX_raw.fTiming",2000,0.,4000.]
+  - &tel2dEX_ID ["tel2dEX_cal.fID",16,-0.5,15.5]
+  - &tel2dEY_ID ["tel2dEY_cal.fID",16,-0.5,15.5]
+  - &tel2E_ID ["tel2E_cal.fID",3,-0.5,2.5]
+  - &tel2dEX_E ["tel2dEX_cal.fCharge",1000,0.,30.]
+  - &tel2dEY_E ["tel2dEY_cal.fCharge",1000,0.,30.]
+  - &tel2E_E ["tel2E_cal.fCharge",1000,0.,40.]
+  - &tel2dEX_T ["tel2dEX_cal.fTiming",1000,-1000.,1000.]
+#  - &tel2dEY_T ["tel2dEY_cal.fTiming",1000,-1000.,1000.]
+  - &tel2E_T ["tel2E_cal.fTiming",1000,-1000.,1000.]
+  - &tel2_dE ["tel2.fdE",1000,0.,30.]
+  - &tel2_Eb ["tel2.fEvec[0]",1000,0.,40.]
+  - &tel2_E ["tel2.fE",1000,0.,100.]
+  - &tel2_Etotal ["tel2.fEtotal",1000,0.,150.]
+
+alias:
+  single: single.fID == 0;
+  coin: coin.fID == 0;
+  pileup: pileup.fID == 0;
+  #target_window: f3ppac.GetX()*f3ppac.GetX()+f3ppac.GetY()*f3ppac.GetY() < 100;
+  #he6_Beam: abs(f3bppac.fTAnode-f3appac.fTAnode-34.5)< 0.5 && abs(f3appac.fX)<30;
+group:
+  - name: tel2
+    contents:
+      - name: EXraw vs ID
+        title:  ID vs tel2dEX_raw EX 
+        name:  ID vs tel2dEX_raw EX 
+        x: *tel2dEX_ID
+        y: *ex_raw
+
+      - name: EYraw vs ID
+        title:  ID vs tel2dEY_raw EY 
+        name:  ID vs tel2dEY_raw EY 
+        x: *tel2dEY_ID
+        y: *ey_raw
+
+      - name: TXraw vs ID
+        title:  ID vs tel2dEX_raw T 
+        name:  ID vs tel2dEX_raw T 
+        x: *tel2dEX_ID
+        y: *t_raw
+
+      - name: tel2dEX fID vs dEY fID
+        title:  dEY fID vs tel2dEX fID 
+        name:  dEY fID vs tel2dEX fID 
+        x: *tel2dEX_ID
+        y: *tel2dEY_ID
+#        cut: ex_cut
+      - name: tel2dEX fID vs energy
+        title:  energy vs tel2dEX fID 
+        name:  energy vs tel2dEX fID 
+        x: *tel2dEX_ID
+        y: *tel2dEX_E
+      - name: tel2dEY fID vs energy
+        title:  energy vs tel2dEY fID 
+        name:  energy vs tel2dEY fID 
+        x: *tel2dEY_ID
+        y: *tel2dEY_E
+      - name: tel2E fID vs energy
+        title:  energy vs tel2E fID 
+        name:  energy vs tel2E fID 
+        x: *tel2E_ID
+        y: *tel2E_E
+      - name: tel2dEX fID vs timing
+        title:  timing vs tel2dEX fID 
+        name:  timing vs tel2dEX fID 
+        x: *tel2dEX_ID
+        y: *tel2dEX_T
+#      - name: tel2dEY fID vs timing
+#        title:  timing vs tel2dEY fID 
+#        name:  timing vs tel2dEY fID 
+#        x: *tel2dEY_ID
+#        y: *tel2dEY_T
+      - name: tel2E fID vs timing
+        title:  timing vs tel2E fID 
+        name:  timing vs tel2E fID 
+        x: *tel2E_ID
+        y: *tel2E_T
+      - name: tel2 dEa vs Etotal
+        title:  Etotal vs tel2 dEa 
+        name:  Etotal vs tel2 dEa 
+        x: *tel2_dE
+        y: *tel2_Etotal
+      - name: tel2 dEa vs E
+        title:  E vs tel2 dEa 
+        name:  E vs tel2 dEa 
+        x: *tel2_dE
+        y: *tel2_E
+      - name: tel2 Eb vs E
+        title:  E vs tel2 Eb 
+        name:  E vs tel2 Eb 
+        x: *tel2_Eb
+        y: *tel2_E

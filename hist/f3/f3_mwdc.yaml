@@ -1,0 +1,136 @@
+anchor: 
+  - &rf0 ["rf_cal_0.fTiming",1000,-1550.,-1370.]
+  - &rf1 ["rf_cal_1.fTiming",1000,-1550.,-1370.]
+  - &tof ["cathb_cal.fTiming-catha_cal.fTiming",1000,-120.,120.]
+  - &dcaX ["mwdca.GetTrack().GetX()",400,-40.,40.]
+  - &dcaY ["mwdca.GetTrack().GetY()",400,-40.,40.]
+  - &dcbX ["mwdcb.GetTrack().GetX()",400,-40.,40.]
+  - &dcbY ["mwdcb.GetTrack().GetY()",400,-40.,40.]
+  - &targetX ["f3mwdc.fX",400,-40.,40.]
+  - &targetY ["f3mwdc.fY",400,-40.,40.]
+  - &tel1_dE ["tel1.fdE",300,0.,35.]
+  - &tel1_Etotal ["tel1.fEtotal",400,0.,60.]
+  - &tel2_dE ["tel2.fdE",300,0.,35.]
+  - &tel2_Etotal ["tel2.fEtotal",400,0.,60.]
+  - &tel3_dE ["tel3.fdE",300,0.,20.]
+  - &tel3_Etotal ["tel3.fEtotal",400,0.,45.]
+  - &tel4_dE ["tel4.fdE",300,0.,15.]
+  - &tel4_Etotal ["tel4.fEtotal",400,0.,40]
+  - &tel5_dE ["tel5.fdE",150,0.,15.]
+  - &tel5_Etotal ["tel5.fEtotal",150,0.,35]
+  - &tel6_dE ["tel6.fdE",150,0.,15,]
+  - &tel6_Etotal ["tel6.fEtotal",100,0.,35.]
+
+alias:
+  # need to select specific timing (because we use V1190A and wide window)
+  single_cut: single.fID == 0;
+  coin_cut: coin.fID == 0;
+  #pileup_cut: pileup.fID == 0;
+  pileup_cut: coin_raw.fID == 2;
+  # he6beam: ;?
+  # he6_single: single_cut && ;?
+  # triton_single: single_cut && ;?
+  # he6_coin: coin_cut && ;?
+  # triton_coin: coin_cut && ;?
+
+group:
+  - name: f3
+    title: f3
+    contents:
+      - name: rf (single)
+        title: rf (single)
+        x: *rf0
+        cut: single_cut
+      - name: rf (coin)
+        title: rf (coin)
+        x: *rf0
+        cut: coin_cut
+      - name: MWDCa X vs Y (single)
+        title: MWDCa X vs Y (single)
+        x: *dcaX
+        y: *dcaY
+        cut: single_cut
+      - name: MWDCb X vs Y (single)
+        title: MWDCb X vs Y (single)
+        x: *dcbX
+        y: *dcbY
+        cut: single_cut
+      - name: F3 target position (single)
+        title: F3 target position (single)
+        x: *targetX
+        y: *targetY
+        cut: single_cut
+      - name: F3 target position (coin)
+        title: F3 target position (coin)
+        x: *targetX
+        y: *targetY
+        cut: coin_cut
+      - name: F3 target position (coin no pileup)
+        title: F3 target position (coin no pileup)
+        x: *targetX
+        y: *targetY
+        cut: coin_cut&&!pileup_cut
+      - name: F3 target position (he6_single not yet)
+        title: F3 target position (he6_single not yet)
+        x: *targetX
+        y: *targetY
+        cut: single_cut
+        #cut: he6_single??
+      - name: MWDC tof vs rf0 (single)
+        title: MWDC tof vs rf0 (single)
+        x: *tof
+        y: *rf0
+        cut: single_cut
+      - name: MWDCb X vs rf0 (single)
+        title: MWDCb X vs rf0 (single)
+        x: *dcbX
+        y: *rf0
+        cut: single_cut
+
+
+
+      - name: tel1 dE vs Etotal (coin he6) # with he6beam gate?
+        title: tel1 dE-E plot (coin he6)
+        x: *tel1_dE
+        y: *tel1_Etotal
+        #cut: he6_coin
+        cut: coin_cut
+      - name: tel2 dE vs Etotal (coin he6)
+        title: tel2 dE-E plot (coin he6)
+        x: *tel2_dE
+        y: *tel2_Etotal
+        #cut: he6_coin
+        cut: coin_cut
+      - name: tel3 dE vs Etotal (coin he6)
+        title: tel3 dE-E plot (coin he6)
+        x: *tel3_dE
+        y: *tel3_Etotal
+        #cut: he6_coin
+        cut: coin_cut
+      - name: tel4 dE vs Etotal (coin he6)
+        title: tel4 dE-E plot (coin he6)
+        x: *tel4_dE
+        y: *tel4_Etotal
+        #cut: he6_coin
+        cut: coin_cut
+      - name: tel5 dE vs Etotal (coin he6)
+        title: tel5 dE-E plot (coin he6)
+        x: *tel5_dE
+        y: *tel5_Etotal
+        #cut: he6_coin
+        cut: coin_cut
+      - name: tel6 dE vs Etotal (coin he6)
+        title: tel6 dE-E plot (coin he6)
+        x: *tel6_dE
+        y: *tel6_Etotal
+        #cut: he6_coin
+        cut: coin_cut
+
+      - name: F3_target_position_X_coin
+        title: F3 target position X (coin)
+        x: *targetX
+        cut: coin_cut
+      - name: F3_target_position_Y_coin
+        title: F3 target position Y (coin)
+        x: *targetY
+        cut: coin_cut

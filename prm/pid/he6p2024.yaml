@@ -1,0 +1,52 @@
+input_ions:
+  - name: 7Li3
+    charge: 3
+    mass: 7.01435758 # amu
+    color: 0 # 0 -> red, 1 -> blue, 2 -> black
+  - name: 6He2
+    charge: 2
+    mass: 6.01778863
+    color: 1
+  - name: 3H1
+    charge: 1
+    mass: 3.015500905
+    color: 2
+  - name: 2H1
+    charge: 1
+    mass: 2.013553496
+    color: 2
+  - name: 1H1
+    charge: 1
+    mass: 1.007276452
+    color: 2
+  - name: 4He2
+    charge: 2
+    mass: 4.001506094
+    color: 2
+
+# BLD parameters
+f1_parameters:
+  brho: 1.227 # Tm
+  rf_period: 57.0 # ns
+
+f2_parameters:
+  PPAC_thickness: 10.0 # um, mylar
+  SSD_thickness: 1500.0 # um
+
+f3_parameters:
+  a_thickness: 15.0 # um, mylar, PPACa/MWDCa
+  b_thickness: 15.0 # um, mylar, PPACb/MWDCb
+  distance: 290.5 # mm, between two tracking detectors
+  trigger: 0 # PPACa/MWDCa: 0, PPACb/MWDCb: 1
+
+# display parameters
+f2_display:
+  rf_offset: -6.5 # ns
+  rf_range: [0.0, 120.0] # ns
+  energy_range: [0.0, 100.0] # MeV
+
+f3_display:
+  rf_offset: -12.0 # ns
+  tof_offset: -2.7 # ns
+  rf_range: [0.0, 120.0] # ns
+  tof_range: [0.0, 8.0] # ns

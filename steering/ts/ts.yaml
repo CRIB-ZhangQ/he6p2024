@@ -1,0 +1,15 @@
+Processor:
+  - name: proc_ts_raw
+    type: art::TTSMappingProcessor
+    parameter:
+      CatID:       101
+      OutputCollection: TS
+
+  - name: proc_ts_sep
+    type: art::TSeparateOutputProcessor
+    parameter:
+      InputCollection: TS
+      OutputCollections:
+        - TS_E7
+        - TS_J1ADC
+        - TS_J1TDC

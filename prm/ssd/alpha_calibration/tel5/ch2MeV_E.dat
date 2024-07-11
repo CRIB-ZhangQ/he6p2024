@@ -1,0 +1,4 @@
+# prm/ssd/tel5/ch2MeV_E.dat is created from AlphaCalibration.C
+# offset gain
+#alpha source calibration
+0.212826 0.00298763

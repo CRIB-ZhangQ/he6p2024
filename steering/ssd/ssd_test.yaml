@@ -1,0 +1,191 @@
+Processor:
+#============ telescope 1 ===================
+  - name: proc_tel1dEX_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         10
+      ChargeType:    1
+      ChargeTypeID:  0
+      TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel1dEX_raw
+
+  - name: proc_tel1dEY_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         11
+      ChargeType:    1
+      ChargeTypeID:  0
+      #TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel1dEY_raw
+
+  - name: proc_tel1E_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         12
+      ChargeType:    1
+      ChargeTypeID:  0
+      #TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel1E_raw
+
+  - name: proc_tel1E_test_raw_sep
+    type: art::TSeparateOutputProcessor
+    parameter:
+      InputCollection: tel1E_raw
+      OutputCollections:
+        - tel1_Eb_raw
+        - tel1_Ec_raw
+        - tel1_Ed_raw
+#============ telescope 2 ===================
+  - name: proc_tel2dEX_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         20
+      ChargeType:    1
+      ChargeTypeID:  0
+      TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel2dEX_raw
+
+  - name: proc_tel2dEY_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         21
+      ChargeType:    1
+      ChargeTypeID:  0
+      #TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel2dEY_raw
+
+  - name: proc_tel2E_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         22
+      ChargeType:    1
+      ChargeTypeID:  0
+      #TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel2E_raw
+
+#  - name: proc_E_test_raw
+#    type: art::TTimingChargeAllMappingProcessor
+#    parameter:
+#      CatID:         22
+#      ChargeType:    1
+#      ChargeTypeID:  0
+#      #TimingTypeID:  1
+#      Sparse:        1
+#      OutputCollection: E_raw
+
+#  - name: proc_tel2E_test_raw_sep
+#    type: art::TSeparateOutputProcessor
+#    parameter:
+#      InputCollection: tel2E_raw
+#      OutputCollections:
+#        - tel2_Eb_raw
+#        - tel2_Ec_raw
+#        - tel2_Ed_raw
+#============ telescope 3 ===================
+  - name: proc_tel3dEX_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         30
+      ChargeType:    1
+      ChargeTypeID:  0
+      TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel3dEX_raw
+
+  - name: proc_tel3dEY_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         31
+      ChargeType:    1
+      ChargeTypeID:  0
+      #TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel3dEY_raw
+
+  - name: proc_tel3E_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         32
+      ChargeType:    1
+      ChargeTypeID:  0
+      #TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel3E_raw
+
+
+#============ telescope 4 ===================
+  - name: proc_tel4dEX_test_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         40 
+      OutputCollection: tel4dEX_raw
+
+  - name: proc_tel4dEY_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         41
+      OutputCollection: tel4dEY_raw
+
+  - name: proc_tel4E_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         42
+      ChargeType:    1
+      ChargeTypeID:  0
+      #TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel4E_raw
+
+#============ telescope 5 ===================
+  - name: proc_tel5dEX_test_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         50 
+      OutputCollection: tel5dEX_raw
+
+  - name: proc_tel5dEY_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         51
+      OutputCollection: tel5dEY_raw
+
+  - name: proc_tel5E_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         52
+      ChargeType:    1
+      ChargeTypeID:  0
+      #TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel5E_raw
+
+
+#============ telescope 6 ===================
+  - name: proc_tel6dEX_test_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         60 
+      OutputCollection: tel6dEX_raw
+
+  - name: proc_tel6dEY_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         61
+      OutputCollection: tel6dEY_raw
+
+  - name: proc_tel6E_test_raw
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         62
+      ChargeType:    1
+      ChargeTypeID:  0
+      #TimingTypeID:  1
+      Sparse:        1
+      OutputCollection: tel6E_raw
+

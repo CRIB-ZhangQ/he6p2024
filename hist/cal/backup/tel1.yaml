@@ -1,0 +1,101 @@
+anchor:
+  - &ex_raw ["tel1dEX_raw.fCharge",1024,100.,4095.]
+  - &ey_raw ["tel1dEY_raw.fCharge",1024,100.,4095.]
+  - &e_raw ["tel1E_raw.fCharge",500,200.,4000.]
+  - &eb_raw ["tel1E_raw[0].fCharge",500,100.,4000.]
+  - &ec_raw ["tel1E_raw[1].fCharge",500,100.,4000.]
+  - &ed_raw ["tel1E_raw[2].fCharge",500,100.,4000.]
+  - &tel1dEX_ID ["tel1dEX_cal.fID",16,-0.5,15.5]
+  - &tel1dEY_ID ["tel1dEY_cal.fID",16,-0.5,15.5]
+  - &tel1E_ID ["tel1E_cal.fID",3,-0.5,2.5]
+  - &tel1dEX_E ["tel1dEX_cal.fCharge",500,0.,30.]
+  - &tel1dEY_E ["tel1dEY_cal.fCharge",500,0.,30.]
+  - &tel1E_E ["tel1E_cal.fCharge",500,0.,40.]
+  - &tel_XID ["tel1.fXID",16,-0.5,15.5]
+  - &tel_YID ["tel1.fYID",16,-0.5,15.5]
+  - &tel1_dE ["tel1.fdE",500,0.,30.]
+  - &tel1_Eb ["tel1.E(1)",500,0.,40.]
+  - &tel1_Ec ["tel1.E(2)",500,0.,40.]
+  - &tel1_Ed ["tel1.E(3)",500,0.,40.]
+  - &tel1_E ["tel1.fE",500,0.,55.]
+  - &tel1_Etotal ["tel1.fEtotal",500,0.,55.]
+
+group:
+  - name: tel1
+    title: tel1
+    contents:
+      - name: dE vs Etotal
+        title: tel1 dE-E plot
+        x: *tel1_dE
+        y: *tel1_Etotal
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: dE vs Etotal
+        title: tel1 dE-E plot 
+        x: *tel1_dE
+        y: *tel1_Etotal
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: tel1dEX_raw vs ID
+        title: tel1dEX_raw vs ID
+        x: *tel1dEX_ID
+        y: *ex_raw
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: tel1Eb
+        title: tel1Eb
+        x: *tel1_Eb
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: tel1Ec
+        title: tel1Ec 
+        x: *tel1_Ec
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: tel1Ed
+        title: tel1Ed 
+        x: *tel1_Ed
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+
+  - name: tel1_raw
+    title: tel1_raw
+    contents:
+      - name: dEXraw vs ID
+        title: tel1dEX_raw EX vs ID
+        x: *tel1dEX_ID
+        y: *ex_raw
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: dEYraw vs ID
+        title: tel1dEY_raw EY vs ID
+        x: *tel1dEY_ID
+        y: *ey_raw
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: Eraw vs ID
+        title: tel1E_raw E vs ID
+        x: *tel1E_ID
+        y: *e_raw
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+
+      - name: dEXcal vs ID
+        title: tel1dEX_cal vs ID
+        x: *tel1dEX_ID
+        y: *tel1dEX_E
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: dEYcal vs ID
+        title: tel1dEY_cal vs ID
+        x: *tel1dEY_ID
+        y: *tel1dEY_E
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: Ecal vs ID
+        title: tel1E_cal vs ID
+        x: *tel1E_ID
+        y: *tel1E_E
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+
+      - name: tel1Eb_raw
+        title: tel1Eb_raw 
+        x: *eb_raw
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: tel1Ec_raw
+        title: tel1Ec_raw 
+        x: *ec_raw
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
+      - name: tel1Ed_raw
+        title: tel1Ed_raw 
+        x: *ed_raw
+        cut: tel1proton_0182 || tel1deuteron_0182 || tel1he3_0182 || tel1alpha_0182
