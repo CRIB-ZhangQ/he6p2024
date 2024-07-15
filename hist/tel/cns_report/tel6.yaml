@@ -1,0 +1,157 @@
+anchor:
+  - &tel6dEX_E1_raw ["tel6dEX_raw.fE1",100,0.,7050.]
+  - &tel6dEX_E2_raw ["tel6dEX_raw.fE2",100,0.,7050.]
+  - &tel6dEX_P1_raw ["tel6dEX_raw.fP1",100,1800.,2600.]
+  - &tel6dEX_P2_raw ["tel6dEX_raw.fP2",100,1800.,2600.]
+  - &tel6dEY_E1_raw ["tel6dEY_raw.fE1",100,0.,7000.]
+  - &tel6dEY_E2_raw ["tel6dEY_raw.fE2",100,0.,7000.]
+  - &tel6dEY_P1_raw ["tel6dEY_raw.fP1",100,1500.,2200.]
+  - &tel6dEY_P2_raw ["tel6dEY_raw.fP2",100,1500, 2200]
+  - &tel6E_raw ["tel6E_raw.fCharge",1000,0.,4000.]
+  - &tel6dEX_ID ["tel6dEX_cal.fID",16,-0.5,15.5]
+  - &tel6dEY_ID ["tel6dEY_cal.fID",16,-0.5,15.5]
+  - &tel6dEX_E ["tel6dEX_cal.fCharge",1000,0.,10.]
+  - &tel6dEY_E ["tel6dEY_cal.fCharge",1000,0.,10.]
+  - &tel6E_E ["tel6E_cal.fCharge",1000,0.,40.]
+  - &tel6dEX_T ["tel6dEX_cal.fTiming",1000,-1000.,1000.]
+  - &tel6dEY_T ["tel6dEY_cal.fTiming",1000,-1000.,1000.]
+  - &tel6E_T ["tel6E_cal.fTiming",1000,-1000.,1000.]
+  - &tel_XID ["tel6.fXID",16,-0.5,15.5]
+  - &tel_YID ["tel6.fYID",16,-0.5,15.5]
+  - &tel6_dE ["tel6.fdE",300,0.,15.]
+  - &tel6_Eb ["tel6.E(1)",500,0.,25.]
+  - &tel6_Etotal ["tel6.fEtotal",300,0.,35.]
+  - &tel6_A ["tel6.A()",50,40.,90.]
+  - &tof ["cathb_cal.fTiming-tel6.T(1)",500,-2200.,-1500.]
+
+
+alias:
+  # need to select specific timing (because we use V1190A and wide window)
+  single_cut: single.fID == 0;
+  coin_cut: coin.fID == 0;
+  pileup_cut: pileup.fID == 0;
+  # ex_cut: tel6dEX_raw.fE1 > 300;
+  # ex_cut2: tel6dEY_raw.fE1 > 300;
+  # he6beam: ;?
+  # proton: coin_cut && ;?
+  # triton: coin_cut && ;?
+
+group:
+  - name: tel6
+    title: tel6
+    contents:
+      - name: dE vs Etotal (coin) # add he6beam gate?
+        title: tel6 dE-E plot (coin)
+        x: *tel6_dE
+        y: *tel6_Etotal
+        #cut: coin_cut
+      - name: dE vs Etotal (proton not yet)
+        title: tel6 dE-E plot (proton not yet)
+        x: *tel6_dE
+        y: *tel6_Etotal
+        #cut: proton
+        cut: coin_cut
+      - name: dE vs Etotal (triton not yet)
+        title: tel6 dE-E plot (triton not yet)
+        x: *tel6_dE
+        y: *tel6_Etotal
+        #cut: triton
+        cut: coin_cut
+      - name: Etotal vs angle (coin)
+        title: Etotal vs angle (coin)
+        x: *tel6_A
+        y: *tel6_Etotal
+        cut: coin_cut
+      - name: Etotal vs angle (proton not yet)
+        title: Etotal vs angle (proton not yet)
+        x: *tel6_A
+        y: *tel6_Etotal
+        #cut: proton
+        cut: coin_cut
+      - name: Etotal vs angle (triton not yet)
+        title: Etotal vs angle (triton not yet)
+        x: *tel6_A
+        y: *tel6_Etotal
+        #cut: triton
+        cut: coin_cut
+      - name: Etotal vs Timing dc-Eb (coin)
+        title: Etotal vs angle dc-Eb (coin)
+        x: *tof
+        y: *tel6_Etotal
+        cut: coin_cut
+      - name: Etotal vs Timing dc-Eb (proton not yet)
+        title: Etotal vs angle dc-Eb (proton not yet)
+        x: *tof
+        y: *tel6_Etotal
+        #cut: proton
+        cut: coin_cut
+      - name: Etotal vs Timing dc-Eb (triton not yet)
+        title: Etotal vs angle dc-Eb (triton not yet)
+        x: *tof
+        y: *tel6_Etotal
+        #cut: triton
+        cut: coin_cut
+
+      - name: Eb vs dEa
+        title: Eb vs dEa
+        x: *tel6_dE
+        y: *tel6_Eb
+
+
+  - name: tel6_raw
+    title: tel6_raw
+    contents:
+      - name: tel6dEX E1 vs pos1
+        title: tel6dEX E1 vs pos1
+        x: *tel6dEX_P1_raw
+        y: *tel6dEX_E1_raw
+      - name: tel6dEX E2 vs pos2
+        title: tel6dEX E2 vs pos2
+        x: *tel6dEX_P2_raw
+        y: *tel6dEX_E2_raw
+      - name: tel6dEX timing
+        title: tel6dEX timing
+        x: *tel6dEX_T
+      - name: tel6dEY E1 vs pos1
+        title: tel6dEY E1 vs pos1
+        x: *tel6dEY_P1_raw
+        y: *tel6dEY_E1_raw
+      - name: tel6dEY E2 vs pos2
+        title: tel6dEY E2 vs pos2
+        x: *tel6dEY_P2_raw
+        y: *tel6dEY_E2_raw
+      - name: tel6dEY timing
+        title: tel6dEY timing
+        x: *tel6dEY_T
+      - name: tel6 Eb raw
+        title: tel6 Eb raw
+        x: *tel6E_raw
+
+      - name: tel6dEX energy vs fID
+        title: tel6dEX energy vs fID
+        x: *tel6dEX_ID
+        y: *tel6dEX_E
+      - name: tel6dEY energy vs fID
+        title: tel6dEY energy vs fID
+        x: *tel6dEY_ID
+        y: *tel6dEY_E
+      - name: tel6E energy
+        title: tel6E energy
+        x: *tel6E_E
+
+      - name: tel6dEX timing vs fID
+        title: tel6dEX timing vs fID
+        x: *tel6dEX_ID
+        y: *tel6dEX_T
+      - name: tel6dEY timing vs fID
+        title: tel6dEY timing vs fID
+        x: *tel6dEY_ID
+        y: *tel6dEY_T
+      - name: tel6E timing
+        title: tel6E timing
+        x: *tel6E_T
+
+      - name: dEY fID vs dEX fID
+        title: tel6dEY fID vs dEX fID
+        x: *tel_XID
+        y: *tel_YID
