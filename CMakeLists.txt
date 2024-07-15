@@ -14,7 +14,7 @@ endif()
 # path definitions
 set(ARTPATH $ENV{TARTSYS})
 find_package(artemis HINTS ${ARTPATH} REQUIRED)
-#find_package(SRIMlib HINTS ${SRIMLIB_DIR} REQUIRED)
+find_package(SRIMlib HINTS ${SRIMLIB_DIR} REQUIRED)
 
 #---Locate the ROOT package and defines a number of variables (e.g. ROOT_INCLUDE_DIRS)
 find_package(ROOT REQUIRED COMPONENTS RIO Net Physics Minuit Minuit2 Geom Gui Genetic)

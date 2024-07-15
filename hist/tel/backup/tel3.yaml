@@ -1,0 +1,163 @@
+anchor:
+  - &ex_raw ["tel3dEX_raw.fCharge",500,200.,4000.]
+  - &ey_raw ["tel3dEY_raw.fCharge",500,200.,4000.]
+  - &e_raw ["tel3E_raw.fCharge",500,200.,4000.]
+  - &tx_raw ["tel3dEX_raw.fTiming",2000,0.,4000.]
+  - &ty_raw ["tel3dEY_raw.fTiming",2000,0.,4000.]
+  - &t_raw ["tel3E_raw.fTiming",2000,0.,4000.]
+  - &tel3dEX_ID ["tel3dEX_cal.fID",16,-0.5,15.5]
+  - &tel3dEY_ID ["tel3dEY_cal.fID",16,-0.5,15.5]
+  - &tel3E_ID ["tel3E_cal.fID",2,-0.5,1.5]
+  - &tel3dEX_E ["tel3dEX_cal.fCharge",500,0.,20.]
+  - &tel3dEY_E ["tel3dEY_cal.fCharge",500,0.,20.]
+  - &tel3E_E ["tel3E_cal.fCharge",500,0.,40.]
+  - &tel3dEX_T ["tel3dEX_cal.fTiming",1000,-1000.,1000.]
+  - &tel3dEY_T ["tel3dEY_cal.fTiming",1000,-1000.,1000.]
+  - &tel3E_T ["tel3E_cal.fTiming",1000,-1000.,1000.]
+  - &tel_XID ["tel3.fXID",16,-0.5,15.5]
+  - &tel_YID ["tel3.fYID",16,-0.5,15.5]
+  - &tel3_dE ["tel3.fdE",300,0.,30.]
+  - &tel3_Eb ["tel3.E(1)",500,0.,40.]
+  - &tel3_Ec ["tel3.E(2)",500,0.,40.]
+  - &tel3_E ["tel3.fE",500,0.,50.]
+  - &tel3_Etotal ["tel3.fEtotal",300,0.,50.]
+  - &tel3_A ["tel3.A()",50,20.,70.]
+  - &tof ["cathb_cal.fTiming-tel3.T(1)",500,-2200.,-1600.]
+
+alias:
+  # need to select specific timing (because we use V1190A and wide window)
+  single_cut: single.fID == 0;
+  coin_cut: coin.fID == 0;
+  pileup_cut: pileup.fID == 0;
+  # he6beam: ;?
+
+group:
+  - name: tel3
+    title: tel3
+    contents:
+      - name: dE vs Etotal (coin) # add he6beam gate?
+        title: tel3 dE-E plot (coin)
+        x: *tel3_dE
+        y: *tel3_Etotal
+        #cut: coin_cut
+      - name: dE vs Etotal (proton)
+        title: tel3 dE-E plot (proton)
+        x: *tel3_dE
+        y: *tel3_Etotal
+        cut: tel3_proton
+      - name: dE vs Etotal (triton not yet)
+        title: tel3 dE-E plot (triton not yet)
+        x: *tel3_dE
+        y: *tel3_Etotal
+        #cut: triton
+        cut: coin_cut
+      - name: Etotal vs angle (coin)
+        title: Etotal vs angle (coin)
+        x: *tel3_A
+        y: *tel3_Etotal
+        cut: coin_cut
+      - name: Etotal vs angle (proton)
+        title: Etotal vs angle (proton)
+        x: *tel3_A
+        y: *tel3_Etotal
+        cut: tel3_proton
+      - name: Etotal vs angle (triton not yet)
+        title: Etotal vs angle (triton not yet)
+        x: *tel3_A
+        y: *tel3_Etotal
+        #cut: triton
+        cut: coin_cut
+      - name: Etotal vs Timing dca-Eb (coin)
+        title: Etotal vs angle dca-Eb (coin)
+        x: *tof
+        y: *tel3_Etotal
+        cut: coin_cut
+      - name: Etotal vs Timing dca-Eb (proton)
+        title: Etotal vs angle dca-Eb (proton)
+        x: *tof
+        y: *tel3_Etotal
+        cut: tel3_proton
+      - name: Etotal vs Timing dca-Eb (triton not yet)
+        title: Etotal vs angle dca-Eb (triton not yet)
+        x: *tof
+        y: *tel3_Etotal
+        #cut: triton
+        cut: coin_cut
+
+      - name: Eb vs dEa
+        title: Eb vs dEa
+        x: *tel3_dE
+        y: *tel3_Eb
+      - name: Ec vs Eb
+        title: Ec vs Eb
+        x: *tel3_Eb
+        y: *tel3_Ec
+      - name: two E vs dEa
+        title: tel3 two E vs dEa
+        x: *tel3_dE
+        y: *tel3_E
+      - name: two E vs Eb
+        title: tel3 two E vs Eb
+        x: *tel3_Eb
+        y: *tel3_E
+
+
+  - name: tel3_raw
+    title: tel3_raw
+    contents:
+      - name: dEXraw vs ID
+        title: tel3dEX_raw EX vs ID
+        x: *tel3dEX_ID
+        y: *ex_raw
+      - name: dEYraw vs ID
+        title: tel3dEY_raw EY vs ID
+        x: *tel3dEY_ID
+        y: *ey_raw
+      - name: Eraw vs ID
+        title: tel3E_raw E vs ID
+        x: *tel3E_ID
+        y: *e_raw
+
+      - name: dEX_Traw vs ID
+        title: tel3dEX_raw T vs ID
+        x: *tel3dEX_ID
+        y: *tx_raw
+      - name: dEY_Traw vs ID
+        title: tel3dEY_raw T vs ID
+        x: *tel3dEY_ID
+        y: *ty_raw
+      - name: E_Traw vs ID
+        title: tel3E_raw T vs ID
+        x: *tel3E_ID
+        y: *t_raw
+
+      - name: dEXcal vs ID
+        title: tel3dEX_cal vs ID
+        x: *tel3dEX_ID
+        y: *tel3dEX_E
+      - name: dEYcal vs ID
+        title: tel3dEY_cal vs ID
+        x: *tel3dEY_ID
+        y: *tel3dEY_E
+      - name: Ecal vs ID
+        title: tel3E_cal vs ID
+        x: *tel3E_ID
+        y: *tel3E_E
+
+      - name: dEX_Tcal vs ID
+        title: tel3dEX_cal T vs ID
+        x: *tel3dEX_ID
+        y: *tel3dEX_T
+      - name: dEY_Tcal vs ID
+        title: tel3dEY_cal T vs ID
+        x: *tel3dEY_ID
+        y: *tel3dEY_T
+      - name: E_Tcal vs ID
+        title: tel3E_cal T vs ID
+        x: *tel3E_ID
+        y: *tel3E_T
+
+      - name: dEY fID vs dEX fID
+        title: tel3dEY fID vs dEX fID
+        x: *tel_XID
+        y: *tel_YID

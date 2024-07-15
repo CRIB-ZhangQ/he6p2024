@@ -12,7 +12,7 @@ Processor:
     type: art::TRIDFEventStore
     parameter:
       OutputTransparency: 1
-      MaxEventNum: 10000
+      #MaxEventNum: 10000
       InputFiles:
         - *input
       SHMID: 0

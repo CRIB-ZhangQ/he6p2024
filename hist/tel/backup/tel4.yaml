@@ -1,0 +1,153 @@
+anchor:
+  - &tel4dEX_E1_raw ["tel4dEX_raw.fE1",200,100.,7800.]
+  - &tel4dEX_E2_raw ["tel4dEX_raw.fE2",200,100.,7800.]
+  - &tel4dEX_P1_raw ["tel4dEX_raw.fP1",400,3900.,4400.]
+  - &tel4dEX_P2_raw ["tel4dEX_raw.fP2",400,3900.,4400.]
+  - &tel4dEY_E1_raw ["tel4dEY_raw.fE1",200,0.,7800.]
+  - &tel4dEY_E2_raw ["tel4dEY_raw.fE2",200,0.,7800.]
+  - &tel4dEY_P1_raw ["tel4dEY_raw.fP1",400,3500.,4050.]
+  - &tel4dEY_P2_raw ["tel4dEY_raw.fP2",400,3500.,4050.]
+  - &tel4E_raw ["tel4E_raw.fCharge",1000,0.,4000.]
+  - &tel4dEX_ID ["tel4dEX_cal.fID",16,-0.5,15.5]
+  - &tel4dEY_ID ["tel4dEY_cal.fID",16,-0.5,15.5]
+  - &tel4dEX_E ["tel4dEX_cal.fCharge",1000,0.,15.]
+  - &tel4dEY_E ["tel4dEY_cal.fCharge",1000,0.,15.]
+  - &tel4E_E ["tel4E_cal.fCharge",1000,0.,40.]
+  - &tel4dEX_T ["tel4dEX_cal.fTiming",1000,-1000.,1000.]
+  - &tel4dEY_T ["tel4dEY_cal.fTiming",1000,-1000.,1000.]
+  - &tel4E_T ["tel4E_cal.fTiming",1000,-1000.,1000.]
+  - &tel_XID ["tel4.fXID",16,-0.5,15.5]
+  - &tel_YID ["tel4.fYID",16,-0.5,15.5]
+  - &tel4_dE ["tel4.fdE",300,0.,20.]
+  - &tel4_Eb ["tel4.E(1)",500,0.,30.]
+  - &tel4_Etotal ["tel4.fEtotal",300,0.,40.]
+  - &tel4_A ["tel4.A()",50,30.,80.]
+  - &tof ["cathb_cal.fTiming-tel4.T(1)",500,-2200.,-1500.]
+
+
+alias:
+  # need to select specific timing (because we use V1190A and wide window)
+  single_cut: single.fID == 0;
+  coin_cut: coin.fID == 0;
+  pileup_cut: pileup.fID == 0;
+  # he6beam: ;?
+  # proton: coin_cut && ;?
+  # triton: coin_cut && ;?
+
+group:
+  - name: tel4
+    title: tel4
+    contents:
+      - name: dE vs Etotal (coin) # add he6beam gate?
+        title: tel4 dE-E plot (coin)
+        x: *tel4_dE
+        y: *tel4_Etotal
+        #cut: coin_cut
+      - name: dE vs Etotal (proton not yet)
+        title: tel4 dE-E plot (proton not yet)
+        x: *tel4_dE
+        y: *tel4_Etotal
+        #cut: proton
+        cut: coin_cut
+      - name: dE vs Etotal (triton not yet)
+        title: tel4 dE-E plot (triton not yet)
+        x: *tel4_dE
+        y: *tel4_Etotal
+        #cut: triton
+        cut: coin_cut
+      - name: Etotal vs angle (coin)
+        title: Etotal vs angle (coin)
+        x: *tel4_A
+        y: *tel4_Etotal
+        cut: coin_cut
+      - name: Etotal vs angle (proton)
+        title: Etotal vs angle (proton)
+        x: *tel4_A
+        y: *tel4_Etotal
+        cut: tel4_proton
+      - name: Etotal vs angle (triton not yet)
+        title: Etotal vs angle (triton not yet)
+        x: *tel4_A
+        y: *tel4_Etotal
+        #cut: triton
+        cut: coin_cut
+      - name: Etotal vs Timing dc-Eb (coin)
+        title: Etotal vs angle dc-Eb (coin)
+        x: *tof
+        y: *tel4_Etotal
+        cut: coin_cut
+      - name: Etotal vs Timing dc-Eb (proton)
+        title: Etotal vs angle dc-Eb (proton)
+        x: *tof
+        y: *tel4_Etotal
+        cut: tel4_proton
+      - name: Etotal vs Timing dc-Eb (triton not yet)
+        title: Etotal vs angle dc-Eb (triton not yet)
+        x: *tof
+        y: *tel4_Etotal
+        #cut: triton
+        cut: coin_cut
+
+      - name: Eb vs dEa
+        title: Eb vs dEa
+        x: *tel4_dE
+        y: *tel4_Eb
+
+
+  - name: tel4_raw
+    title: tel4_raw
+    contents:
+      - name: tel4dEX E1 vs pos1
+        title: tel4dEX E1 vs pos1
+        x: *tel4dEX_P1_raw
+        y: *tel4dEX_E1_raw
+      - name: tel4dEX E2 vs pos2
+        title: tel4dEX E2 vs pos2
+        x: *tel4dEX_P2_raw
+        y: *tel4dEX_E2_raw
+      - name: tel4dEX timing
+        title: tel4dEX timing
+        x: *tel4dEX_T
+      - name: tel4dEY E1 vs pos1
+        title: tel4dEY E1 vs pos1
+        x: *tel4dEY_P1_raw
+        y: *tel4dEY_E1_raw
+      - name: tel4dEY E2 vs pos2
+        title: tel4dEY E2 vs pos2
+        x: *tel4dEY_P2_raw
+        y: *tel4dEY_E2_raw
+      - name: tel4dEY timing
+        title: tel4dEY timing
+        x: *tel4dEY_T
+      - name: tel4 Eb raw
+        title: tel4 Eb raw
+        x: *tel4E_raw
+
+      - name: tel4dEX energy vs fID
+        title: tel4dEX energy vs fID
+        x: *tel4dEX_ID
+        y: *tel4dEX_E
+      - name: tel4dEY energy vs fID
+        title: tel4dEY energy vs fID
+        x: *tel4dEY_ID
+        y: *tel4dEY_E
+      - name: tel4E energy
+        title: tel4E energy
+        x: *tel4E_E
+
+      - name: tel4dEX timing vs fID
+        title: tel4dEX timing vs fID
+        x: *tel4dEX_ID
+        y: *tel4dEX_T
+      - name: tel4dEY timing vs fID
+        title: tel4dEY timing vs fID
+        x: *tel4dEY_ID
+        y: *tel4dEY_T
+      - name: tel4E timing
+        title: tel4E timing
+        x: *tel4E_T
+
+      - name: dEY fID vs dEX fID
+        title: tel4dEY fID vs dEX fID
+        x: *tel_XID
+        y: *tel_YID
