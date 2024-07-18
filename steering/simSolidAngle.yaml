@@ -121,14 +121,14 @@ Processor:
     parameter:
       InputCollection_cm: light_cm
       InputCollection_det: telescope
-      Nbin_angle: 90
+      Nbin_angle: 180
       range_angle: [0., 180.]
       #Nbin_angle: 90 
       #range_angle: [0., 90.]
       Nbin_energy: 100 
       range_energy: [0., 50.]
       IsInverseKinematics: true # true/false
-      CenterOfMass: true # true/false
+      CenterOfMass: rue # true/false
       HistFile: *histout
 
   - name: progress

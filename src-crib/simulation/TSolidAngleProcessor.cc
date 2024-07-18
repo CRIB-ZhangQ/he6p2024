@@ -34,8 +34,8 @@ TSolidAngleProcessor::TSolidAngleProcessor() : fInData_cm(NULL), fInData_det(NUL
    RegisterProcessorParameter("range_angle", "range of the angle histogram", fRange_angle, init_d_vec);
    RegisterProcessorParameter("Nbin_energy", "Nbin of the energy histogram", fNbin_energy, 0);
    RegisterProcessorParameter("range_energy", "range of the energy histogram", fRange_energy, init_d_vec);
-   RegisterProcessorParameter("IsInverseKinematics", "inverse kinematics true/false", fIsIK, false);
-   RegisterProcessorParameter("CenterOfMass", "inverse kinematics true/false", fCenterOfMass, false);
+   RegisterProcessorParameter("IsInverseKinematics", "inverse kinematics true/false", fIsIK, true);
+   RegisterProcessorParameter("CenterOfMass", "The lab. system frame of the CM system frame true/false", fCenterOfMass, false);
 
    RegisterProcessorParameter("HistFile", "name of output histogram rootfile", fFileName, TString(""));
 }
@@ -127,7 +127,7 @@ void TSolidAngleProcessor::Init(TEventCollection *col)
        // Calculate the bin center of the angle in the center of mass system
        Double_t angle_center = fRange_angle[0] + (fRange_angle[1] - fRange_angle[0]) / (2.0 * fNbin_angle) + (Double_t)Abin * (fRange_angle[1] - fRange_angle[0]) / fNbin_angle;
        //conversion factor: convert solid angle from the center of mass system to the laboratory system 
-       Double_t fOmegaCm2Lab = OmegaCM2LAB(angle_center);
+       //Double_t fOmegaCm2Lab = OmegaCM2LAB(angle_center);
 
        // in the c.m. system
        h1A->Fill(angle_center, cos(Abin*TMath::DegToRad())-cos((Abin+1)*TMath::DegToRad()));
@@ -162,7 +162,7 @@ void TSolidAngleProcessor::Process()
         Double_t angle_center = fRange_angle[0] + (fRange_angle[1] - fRange_angle[0]) / (2.0 * fNbin_angle) +
                                 (Double_t)i * (fRange_angle[1] - fRange_angle[0]) / fNbin_angle;
         h1_all->Fill(angle_center);
-        //h2_all->Fill(angle_center, Data->GetEnergy());
+        h2_all->Fill(angle_center, Data->GetEnergy());
      }
    }
 
@@ -200,7 +200,7 @@ void TSolidAngleProcessor::PostLoop()
    // for the nuclear reaction
    if(fCenterOfMass){
      h1->Multiply(h1,h1A, 2.0 * TMath::Pi())    , h1->Divide(h1_all);
-     //h2->Multiply(h2,h2EA, 2.0 * TMath::Pi())   , h2->Divide(h2_all);
+     h2->Multiply(h2,h2EA, 2.0 * TMath::Pi())   , h2->Divide(h2_all);
      h1_0->Multiply(h1_0,h1A, 2.0 * TMath::Pi()), h1_0->Divide(h1_all);
      h1_1->Multiply(h1_1,h1A, 2.0 * TMath::Pi()), h1_1->Divide(h1_all);
      h1_2->Multiply(h1_2,h1A, 2.0 * TMath::Pi()), h1_2->Divide(h1_all);
@@ -220,13 +220,12 @@ void TSolidAngleProcessor::PostLoop()
    }
 
    //check the solid anlge in the lab. system
-   //for(Int_t angle_bin = 1; angle_bin < h1->GetNbinsX(); angle_bin++){
-   //  double angle_lab = (180.0 - h1->GetXaxis()->GetBinCenter(angle_bin)) / 2.0;
-   //  double SolidAngle = h1->GetBinContent(angle_bin);
-   //  std::cout<<"angle_bin = "<<angle_bin<<", angle = "<<angle_lab<<", solidangle = "<<SolidAngle<<std::endl;
-   //  h1_lab->Fill(angle_lab, SolidAngle);
-   //}
-     
+   for(Int_t angle_bin = 1; angle_bin < h1->GetNbinsX(); angle_bin++){
+     Double_t angle_lab = (180.0 - h1->GetXaxis()->GetBinCenter(angle_bin)) / 2.0;
+     Double_t SolidAngle = h1->GetBinContent(angle_bin) * OmegaCM2LAB(angle_bin);
+     h1_lab->Fill(angle_lab, SolidAngle);
+   }
+
 
    h1->Write("SolidAngle_1D");
    h2->Write("SolidAngle_2D");
@@ -243,8 +242,8 @@ Double_t TSolidAngleProcessor::OmegaCM2LAB(Double_t thetacm){
   Double_t mass_a = Mass[0], mass_A = Mass[1] , mass_b = Mass[2] , mass_B = Mass[3];
   Double_t Ecm = E_6He * mass_A / (mass_a + mass_A);
   Double_t gamma_beta = TMath::Sqrt(fGamma());
-  Double_t fOmegalab2cm = abs((gamma_beta*cos(thetacm*deg2rad) - 1.0) / pow((1.0 + gamma_beta*gamma_beta - 2.0*gamma_beta*cos(thetacm*deg2rad)), 1.5)); 
-  return fOmegalab2cm; 
+  Double_t fOmegalab2cm = TMath::Abs((gamma_beta*cos(thetacm*deg2rad) - 1.0) / pow((1.0 + gamma_beta*gamma_beta - 2.0*gamma_beta*cos(thetacm*deg2rad)), 1.5)); 
+  return fOmegalab2cm;
 }
 
 Double_t TSolidAngleProcessor::fGamma(){

@@ -116,8 +116,6 @@ void TIsotropicDecayProcessor::Process()
 
 
    TReactionInfo *outData = static_cast<TReactionInfo *>(fOutData->ConstructedAt(0));
-   //outData->SetTrack(reac_posx, reac_posy, reac_posz, TMath::ATan(decay_u / decay_w),
-   //                  TMath::ATan(decay_v / decay_w));
    outData->SetXYZ(reac_posx, reac_posy, reac_posz);
 
    outData->SetLorentzVector(decay_u, decay_v, decay_w,fTargetMass);
@@ -128,9 +126,3 @@ void TIsotropicDecayProcessor::Process()
    outData->SetEnergy(beam_energy);
 }
 
-// ===========================================
-// kinematics
-// lorentz invariant
-// m^2 = (E - Eloss)^2 - (factor*p)^2
-// factor*2 = ( (E - Eloss)^2 - m^2 )/p^2
-// factor = sqrt( ((E - Eloss)^2 - m2)/(E^2 - m^2) )
