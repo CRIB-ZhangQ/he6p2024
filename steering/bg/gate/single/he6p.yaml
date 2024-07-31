@@ -1,0 +1,67 @@
+Processor:
+  - name: proc_gateinit
+    type: art::TGateArrayInitializer
+    parameter:
+      OutputTransparency: 1
+
+  - name: proc_gate
+    type: art::TTreeFormulaGateProcessor
+    parameter:
+      Definitions:
+        - "nopileup; coin_raw@.GetEntriesFast()==1"
+        - "single; single.fTiming > 1000 && single.fTiming<2000"
+        - "beam_single; coin_raw.fID == 0"
+        - "rf_single; abs(rf_cal_0.fTiming + 1.51309e+03) < 4.0*2.99124 || abs(rf_cal_0.fTiming + 1.44258e+03) < 4.0*2.98674"
+        - "cathb_trigger; cathb_cal.fTiming > -1520 && cathb_cal.fTiming < -1490"
+        - "mwdcb_geo; abs(mwdcb.fX) < 50.0 && abs(mwdcb.fY) < 50.0"
+      OutputTransparency: 1
+      Verbose: 1
+
+  - name: nopileup_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: nopileup
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+
+  - name: beam_single_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: single 
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: single_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: beam_single
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: rf_single_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: rf_single
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: cathb_trig_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: cathb_trigger
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: mwdcb_size_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: mwdcb_geo
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1

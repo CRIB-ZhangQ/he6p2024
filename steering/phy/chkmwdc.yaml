@@ -1,0 +1,69 @@
+Anchor:
+
+ - &input ridf/@NAME@@NUM@.ridf
+ - &output output/@NAME@/@NUM@/chkmwdc@NAME@@NUM@.root
+# - &histout output/@NAME@/@NUM@/chkmwdc@NAME@@NUM@.hist.root
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: ridf
+    type: art::TRIDFEventStore
+    parameter:
+      OutputTransparency: 1
+      InputFiles:
+        - *input
+
+  - name: mapper
+    type: art::TMappingProcessor
+    parameter:
+      OutputTransparency: 1
+
+  - include: tref.yaml
+  - include: mwdc/mwdc_crib.yaml
+
+
+### MWDCa (dc32) Hist
+
+#  - name: projection
+#    type: art::TTreeProjectionProcessor
+#    parameter:
+#      FileName: hist/mwdc/chkmwdc.tmpl.yaml
+#      Type:     art::TTreeProjection
+#      Replace: |
+#        plane: dca1
+#
+#  - name: projection
+#    type: art::TTreeProjectionProcessor
+#    parameter:
+#      FileName: hist/mwdc/chkmwdc.tmpl.yaml
+#      Type:     art::TTreeProjection
+#      Replace: |
+#        plane: dca2
+
+### MWDCb (dc71)(fe71?) Hist
+
+#  - name: projection
+#    type: art::TTreeProjectionProcessor
+#    parameter:
+#      FileName: hist/mwdc/chkmwdc.tmpl.yaml
+#      Type:     art::TTreeProjection
+#      Replace: |
+#        plane: dc21
+#
+#  - name: projection
+#    type: art::TTreeProjectionProcessor
+#    parameter:
+#      FileName: hist/mwdc/chkmwdc.tmpl.yaml
+#      OutputFilename: *histout
+#      Type:     art::TTreeProjection
+#      Replace: |
+#        plane: dc22
+
+
+  - name: outputtree
+    type: art::TOutputTreeProcessor
+    parameter:
+      FileName:
+        - *output

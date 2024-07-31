@@ -1,0 +1,24 @@
+anchor: 
+  - &dcbX ["mwdcb.GetTrack().GetX()",100,-50.,50.]
+  - &dcbY ["mwdcb.GetTrack().GetY()",100,-50.,50.]
+  - &targetX ["f3mwdc.fX",100,-50.,50.]
+  - &targetY ["f3mwdc.fY",100,-50.,50.]
+
+alias:
+  # need to select specific timing (because we use V1190A and wide window)
+  coin_cut: coin.fID == 0;
+
+group:
+  - name: f3
+    title: f3
+    contents:
+      - name: f3mwdcX_dcbX
+        title: f3mwdcX_dcbX
+        x: *dcbX
+        y: *targetX
+        cut: coin_cut
+      - name: f3mwdcY_dcbY
+        title: f3mwdcY_dcbY
+        x: *dcbY
+        y: *targetY
+        cut: coin_cut

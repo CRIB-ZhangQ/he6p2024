@@ -21,7 +21,7 @@ void elastic_angle_cm()
   TCanvas *canvas = new TCanvas("canvas","canvas",800,600);
 
   const Int_t numofTel = 6;
-  TFile *fphy = new TFile("elastic_phy.root");
+  TFile *fphy = new TFile("elastic_phy_0099.root");
   TFile *fsolidangle = new TFile("output/sim/solidangle.hist.root");
   TFile *fsinglebeam = new TFile("output/single/gate/phyrun/run0099.root");
 

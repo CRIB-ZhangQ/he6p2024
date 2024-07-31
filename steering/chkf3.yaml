@@ -33,7 +33,6 @@ Processor:
   - include: rf/rf.yaml
   - include: coin/coin.yaml
   - include: mwdc/mwdc_crib.yaml
-  #- include: mwdc/mwdc_crib.yaml
   - include: ssd/f3ssd.yaml
   - include: scaler/scaler.yaml
 #  - include: trig/trigger.yaml

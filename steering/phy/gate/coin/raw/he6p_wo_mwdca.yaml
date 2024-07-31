@@ -1,0 +1,66 @@
+Processor:
+  - name: proc_gateinit
+    type: art::TGateArrayInitializer
+    parameter:
+      OutputTransparency: 1
+
+  - name: proc_gate
+    type: art::TTreeFormulaGateProcessor
+    parameter:
+      Definitions:
+        - "nopileup; coin_raw@.GetEntriesFast()==1"
+        - "coin; coin.fTiming>1000 && coin.fTiming<2500"
+        - "beam_coin; coin_raw.fID == 1"
+        - "rf_coin; abs(rf_cal_0.fTiming + 1.54196e3)<4.0*4.33145 || abs(rf_cal_0.fTiming + 1.47519e3)<4.*5.01248 || abs(rf_cal_0.fTiming + 1.40363e3)<4.*4.27355"
+        - "cathb_trigger; cathb_cal.fTiming>-1650 && cathb_cal.fTiming<-1550"
+        - "mwdcb_geo; abs(mwdcb.fX) < 50.0 && abs(mwdcb.fY) < 50.0"
+      OutputTransparency: 1
+      Verbose: 1
+
+  - name: nopileup_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: nopileup
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: beam_coin_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: coin  
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: beam_coin_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: beam_coin
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: rf_coin_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: rf_coin
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: mwdcb_size_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: mwdcb_geo
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: cathb_trig_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: cathb_trig
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1

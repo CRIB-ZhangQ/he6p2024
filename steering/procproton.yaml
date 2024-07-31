@@ -2,9 +2,6 @@ Anchor:
  - &input output/coin/gate/phyrun/@NAME@@NUM@.root
  - &output output/coin/gate/phyrun/proton/@TEL@/@NAME@@NUM@_proton.root
  - &histout output/coin/gate/phyrun/proton/@TEL@/@NAME@@NUM@_proton.hist.root
- #- &input output/coin/gate/bgrun/@NAME@@NUM@.root
- #- &output output/coin/gate/bgrun/proton/@TEL@/@NAME@@NUM@_proton.root
- #- &histout output/coin/gate/bgrun/proton/@TEL@/@NAME@@NUM@_proton.hist.root
 
 Processor:
   - name: timer
@@ -17,35 +14,10 @@ Processor:
       FileName: *input
       TreeName: tree
 
-  #- name: proc_copy_processor
-  #  type: art::TBranchCopyProcessor
-  #  parameter:
-  #    InputCollection:     tel1
-  #    OutputCollection:    ftel
-
-  #- name: proc_copy_processor
-  #  type: art::TBranchCopyProcessor
-  #  parameter:
-  #    InputCollection:     mwdca 
-  #    OutputCollection:    fmwdca_check 
-
-  #- name: proc_copy_processor
-  #  type: art::TBranchCopyProcessor
-  #  parameter:
-  #    InputCollection:     mwdcb
-  #    OutputCollection:    fmwdcb_check
-
-  #- name: proc_copy_processor
-  #  type: art::TBranchCopyProcessor
-  #  parameter:
-  #    InputCollection:     f3mwdc
-  #    OutputCollection:    ftrack_check
-
-
   - name: analysis_proton_processor
     type: art::TReacAnalysisProcessor
     parameter:
-      #InputCollection1:     mwdca
+      InputCollection1:     mwdca
       InputCollection2:     mwdcb
       InputCollection3:     f3mwdc 
       InputCollection4:     @TEL@ 

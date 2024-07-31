@@ -1,0 +1,120 @@
+Anchor:
+
+ - &input ridf/@NAME@@NUM@.ridf
+ - &output output/@NAME@/@NUM@/chkssd@NAME@@NUM@.root
+ - &histout output/@NAME@/@NUM@/chkssd@NAME@@NUM@.hist.root
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: ridf
+    type: art::TRIDFEventStore
+    parameter:
+      OutputTransparency: 1
+      InputFiles:
+        - *input
+      SHMID: 0
+
+  - name: mapper
+    type: art::TMappingProcessor
+    parameter:
+      OutputTransparency: 1
+
+#Only for test (no need anymore?):
+#  - include: ssd/ssd_test.yaml
+
+#Raw data checking, ready to use:
+  - include: ssd/f3ssd_raw.yaml
+
+#With calibrated data, need debugging
+#  - include: ssd/f3ssd.yaml
+
+
+#### SSD Hist
+
+ - name: projection_tel_ssd
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/tel_E.yaml
+      Type:     art::TTreeProjection
+
+
+  - name: projection_tel1_dE
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/dE_XY.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        dssd: tel1dE
+
+
+  - name: projection_tel2_dE
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/dE_XY.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        dssd: tel2dE
+
+  - name: projection_tel3_dE
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/dE_XY.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        dssd: tel3dE
+
+  - name: projection_tel4_dEX
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/mux.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        mux: tel4dEX
+
+  - name: projection_tel4_dEY
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/mux.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        mux: tel4dEY
+
+  - name: projection_tel5_dEX
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/mux.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        mux: tel5dEX
+
+  - name: projection_tel6dEY
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/mux.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        mux: tel5dEY
+
+  - name: projection_tel6_dEX
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/mux.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        mux: tel6dEX
+
+  - name: projection_tel6_dEY
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/ssd/mux.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        mux: tel6dEY
+
+  - name: outputtree
+    type: art::TOutputTreeProcessor
+    parameter:
+      FileName:
+        - *output

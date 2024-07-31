@@ -1,0 +1,103 @@
+Processor:
+  - name: proc_gateinit
+    type: art::TGateArrayInitializer
+    parameter:
+      OutputTransparency: 1
+
+  - name: proc_gate
+    type: art::TTreeFormulaGateProcessor
+    parameter:
+      Definitions:
+        - "nopileup; coin_raw@.GetEntriesFast()==1"
+        - "single; single.fTiming > 1000 && single.fTiming<2000"
+        - "beam_single; coin_raw.fID == 0"
+        - "rf_single; abs(rf_cal_0.fTiming + 1.51323e+03) < 4.0*2.83042 || abs(rf_cal_0.fTiming + 1.44275e+03) < 4.0*2.84997"
+        - "catha_trigger; catha_cal.fTiming > -1520 && catha_cal.fTiming < -1480"
+        - "cathb_trigger; cathb_cal.fTiming > -1520 && cathb_cal.fTiming < -1490"
+        - "he6_tof; abs(catha_cal.fTiming-cathb_cal.fTiming) < 50"
+        - "mwdca_geo; abs(mwdca.fX) < 50.0 && abs(mwdca.fY) < 50.0"
+        - "mwdcb_geo; abs(mwdcb.fX) < 50.0 && abs(mwdcb.fY) < 50.0"
+        - "f3target; (f3mwdc.GetY()*f3mwdc.GetY()+f3mwdc.GetX()*f3mwdc.GetX())<15.0*15.0"
+      OutputTransparency: 1
+      Verbose: 1
+
+  - name: nopileup_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: nopileup
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+
+  - name: beam_single_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: single 
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: single_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: beam_single
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: rf_single_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: rf_single
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: catha_trig_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: catha_trigger
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: cathb_trig_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: cathb_trigger
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: he6_tof_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: he6_tof
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: mwdca_size_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: mwdca_geo 
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: mwdcb_size_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: mwdcb_geo
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: target_size_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: f3target 
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1

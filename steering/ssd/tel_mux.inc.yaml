@@ -122,13 +122,13 @@ Processor:
       PositionConverterArray: prm_@NAME@_dEY_position
       HasReflection: 0 
 
-  #- name: proc_TTimeValidator
-  #  type: art::TTimeValidator
-  #  parameter:
-  #    InputCollection:      @NAME@dEY_cal
-  #    OutputCollection:     @NAME@dEY_cal_gate
-  #    #ValidTimeRange: @ValidTimeRange_dEY@ 
-  #    OutputTransparency:   0
+  - name: proc_TTimeValidator
+    type: art::TTimeValidator
+    parameter:
+      InputCollection:      @NAME@dEY_cal
+      OutputCollection:     @NAME@dEY_cal_gate
+      ValidTimeRange: @ValidTimeRange_dEY@ 
+      OutputTransparency:   0
 
   - name: proc_@NAME@_E
     type: art::TTimingChargeCalibrationProcessor
@@ -147,80 +147,12 @@ Processor:
       ValidTimeRange: @ValidTimeRange_Eb@ 
       OutputTransparency:   0
 
-## For individual channels
-#  - name: proc_@NAME@_dEX_cal_sep
-#    type: art::TSeparateOutputProcessor
-#    parameter:
-#      InputCollection: @NAME@_dEX_cal
-#      OutputCollections:
-#        - @NAME@dEX_cal_0
-#        - @NAME@dEX_cal_1
-#        - @NAME@dEX_cal_2
-#        - @NAME@dEX_cal_3
-#        - @NAME@dEX_cal_4
-#        - @NAME@dEX_cal_5
-#        - @NAME@dEX_cal_6
-#        - @NAME@dEX_cal_7
-#        - @NAME@dEX_cal_8
-#        - @NAME@dEX_cal_9
-#        - @NAME@dEX_cal_10
-#        - @NAME@dEX_cal_11
-#        - @NAME@dEX_cal_12
-#        - @NAME@dEX_cal_13
-#        - @NAME@dEX_cal_14
-#        - @NAME@dEX_cal_15
-#
-#  - name: proc_@NAME@_dEY_cal_sep
-#    type: art::TSeparateOutputProcessor
-#    parameter:
-#      InputCollection: @NAME@_dEY_cal
-#      OutputCollections:
-#        - @NAME@dEY_cal_0
-#        - @NAME@dEY_cal_1
-#        - @NAME@dEY_cal_2
-#        - @NAME@dEY_cal_3
-#        - @NAME@dEY_cal_4
-#        - @NAME@dEY_cal_5
-#        - @NAME@dEY_cal_6
-#        - @NAME@dEY_cal_7
-#        - @NAME@dEY_cal_8
-#        - @NAME@dEY_cal_9
-#        - @NAME@dEY_cal_10
-#        - @NAME@dEY_cal_11
-#        - @NAME@dEY_cal_12
-#        - @NAME@dEY_cal_13
-#        - @NAME@dEY_cal_14
-#        - @NAME@dEY_cal_15
-#
-#  - name: proc_@NAME@_E_cal_sep
-#    type: art::TSeparateOutputProcessor
-#    parameter:
-#      InputCollection: @NAME@_E_cal
-#      OutputCollections:
-#        - @NAME@E_cal_0
-#        - @NAME@E_cal_1
-#        - @NAME@E_cal_2
-
-
-# process telescope
-#  - name: proc_@NAME@_parameter
-#    type: art::TParameterArrayLoader
-#    parameter:
-#      Name: prm_@NAME@
-#      Type: art::TTelescopeParameter
-#      FileName: prm/ssd/@NAME@/tel_conf.yaml
-#      FileFormat: yaml
-#      OutputTransparency: 1
-
 # process telescope
   - name: proc_@NAME@
     type: art::TTelescopeProcessor
     parameter:
-#      TelescopeParameter:    prm_@NAME@
       InputCollection1:      @NAME@dEX_cal_gate
-      InputCollection2:      @NAME@dEY_cal
+      InputCollection2:      @NAME@dEY_cal_gate
       InputCollection3:      @NAME@E_cal_gate
       OutputCollection:      @NAME@
       IsDSSSD: true
-
-

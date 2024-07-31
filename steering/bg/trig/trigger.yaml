@@ -1,0 +1,20 @@
+Processor:
+  - name: proc_trig_map
+    type: art::TTimingDataMappingProcessor
+    parameter:
+      CatID: 200
+      DataTypeID: 0
+      Sparse: 1
+      OutputCollection: trig_raw
+
+  - name: proc_trig_sep
+    type: art::TSeparateOutputProcessor
+    parameter:
+      InputCollection: trig_raw
+      OutputCollections:
+        - trig_E7
+        - catha_E7
+        - cathb_E7
+        - trig_J1
+        - catha_J1
+        - cathb_J1

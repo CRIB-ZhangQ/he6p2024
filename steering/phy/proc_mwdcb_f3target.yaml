@@ -1,0 +1,67 @@
+Anchor:
+
+ - &histout output/coin/gate/mwdc/mwdcb_f3target.root
+ #- &treeout output/coin/gate/mwdc/mwdcb_f3target.hist.root
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: ridf
+    type: art::TRIDFEventStore
+    parameter:
+      OutputTransparency: 1
+      InputFiles:
+
+        #- ridf/run0081.ridf
+        - ridf/run0072.ridf
+        - ridf/run0073.ridf
+        - ridf/run0078.ridf
+        - ridf/run0079.ridf
+        - ridf/run0080.ridf
+        - ridf/run0084.ridf
+        - ridf/run0087.ridf
+        - ridf/run0088.ridf
+        - ridf/run0090.ridf
+        - ridf/run0091.ridf
+        - ridf/run0092.ridf
+        - ridf/run0093.ridf
+        - ridf/run0094.ridf
+        - ridf/run0095.ridf
+        - ridf/run0096.ridf
+        - ridf/run0099.ridf
+
+  - name: mapper
+    type: art::TMappingProcessor
+    parameter:
+      OutputTransparency: 1
+
+  - name: detector_initialize
+    type: art::TUserGeoInitializer
+    parameter:
+      FileName: prm/geo/he6p2024.yaml
+      #Visible: false
+      OutputTransparency: 1
+
+  - include: tref.yaml
+  - include: rf/rf.yaml
+  - include: coin/coin.yaml
+  - include: mwdc/mwdc_crib_coin.yaml
+
+  - include: gate/coin/raw/mwdcb_f3target.yaml
+
+# F3 beam info hist
+  - name: projection_f3_all_detector
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/f3/mwdcb_target.yaml
+      OutputFilename: *histout
+      Type:     art::TTreeProjection
+
+
+
+#  - name: outputtree
+#    type: art::TOutputTreeProcessor
+#    parameter:
+#      FileName:
+#        - *treeout

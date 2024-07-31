@@ -2,7 +2,6 @@ Anchor:
 
  - &input ridf/@NAME@@NUM@.ridf
  - &output output/coin/gate/phyrun/@NAME@@NUM@.root
- #- &output output/coin/gate/bgrun/@NAME@@NUM@.root
 
 Processor:
   - name: timer

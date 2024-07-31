@@ -6,7 +6,7 @@ void elastic()
 {
   TCanvas *canvas = new TCanvas("canvas","canvas",800,600);
   const Int_t numofTel = 6;
-  TFile *fphy = new TFile("elastic_phy.root");
+  TFile *fphy = new TFile("elastic_phy_141_wo_mwdca.root");
   if(!fphy){
     std::cerr<<"Error: could not open the root file"<<std::endl;
   }
@@ -24,7 +24,7 @@ void elastic()
   TH2D *telEA[numofTel];
   //TH2D *telEA = (TH2D*)dirfile->Get(Form("tel1_energy_theta_lab"));
   for(Int_t tel = 0; tel < numofTel; tel++){
-    telEA[tel] = (TH2D*)(dirfile[tel]->Get(Form("tel%d_energy_theta_cm",tel+1)));
+    telEA[tel] = (TH2D*)(dirfile[tel]->Get(Form("tel%d_theta_lab_raw",tel+1)));
     if(!telEA[tel]){
       std::cerr<<"Error: Could not find directory in file"<<std::endl;
       fphy->Close();

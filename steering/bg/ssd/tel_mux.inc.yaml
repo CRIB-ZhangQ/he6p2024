@@ -1,0 +1,162 @@
+Processor:
+# ch2MeV parameters
+  - name: proc_@NAME@_dEX_ch2MeV
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEX_ch2MeV
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2MeV_dEX.dat
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_dEY_ch2MeV
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEY_ch2MeV
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2MeV_dEY.dat
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_E_ch2MeV
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_E_ch2MeV
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2MeV_E.dat
+      OutputTransparency: 0 
+
+# ch2ns parameters
+  - name: proc_@NAME@_dEX_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEX_ch2ns
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2ns_dEX.dat
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_dEY_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEY_ch2ns
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2ns_dEY.dat
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_E_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_E_ch2ns
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2ns_E.dat
+      OutputTransparency: 1
+
+
+# MUX position parameters
+  - name: proc_@NAME@_dEX_position
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEX_position
+      Type: art::TMUXPositionConverter
+      FileName: prm/ssd/@NAME@/pos_dEX/@RUNNAME@@RUNNUM@.dat
+      #FileName: prm/ssd/@NAME@/pos_dEX/current
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_dEY_position
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEY_position
+      Type: art::TMUXPositionConverter
+      FileName: prm/ssd/@NAME@/pos_dEY/@RUNNAME@@RUNNUM@.dat
+      #FileName: prm/ssd/@NAME@/pos_dEY/current
+      OutputTransparency: 1
+
+
+# data mapping
+  - name: proc_@NAME@_dEX_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         @CATID_dEX@ 
+      OutputCollection: @NAME@dEX_raw
+
+  - name: proc_@NAME@_dEY_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         @CATID_dEY@
+      OutputCollection: @NAME@dEY_raw
+
+  - name: proc_@NAME@_E_raw
+    #type: art::TTimingChargeMappingProcessor
+    type: art::TTimingChargeAllMappingProcessor
+    parameter:
+      CatID:         @CATID_E@ 
+      ChargeType:    1
+      ChargeTypeID:  0
+      TimingTypeID:  1
+      Sparse:        0  
+      OutputCollection: @NAME@E_raw
+
+
+# calibration branch
+  - name: proc_@NAME@_dEX
+    type: art::TMUXCalibrationProcessor
+    parameter:
+      InputCollection:      @NAME@dEX_raw
+      OutputCollection:     @NAME@dEX_cal
+      ChargeConverterArray: prm_@NAME@_dEX_ch2MeV
+      TimingConverterArray: prm_@NAME@_dEX_ch2ns
+      PositionConverterArray: prm_@NAME@_dEX_position
+      HasReflection: 0
+
+  - name: proc_TTimeValidator
+    type: art::TTimeValidator
+    parameter:
+      InputCollection:      @NAME@dEX_cal
+      OutputCollection:     @NAME@dEX_cal_gate
+      ValidTimeRange: @ValidTimeRange_dEX@ 
+      OutputTransparency:   0
+
+  - name: proc_@NAME@_dEY
+    type: art::TMUXCalibrationProcessor
+    parameter:
+      InputCollection:      @NAME@dEY_raw
+      OutputCollection:     @NAME@dEY_cal
+      ChargeConverterArray: prm_@NAME@_dEY_ch2MeV
+      TimingConverterArray: prm_@NAME@_dEY_ch2ns
+      PositionConverterArray: prm_@NAME@_dEY_position
+      HasReflection: 0 
+
+  #- name: proc_TTimeValidator
+  #  type: art::TTimeValidator
+  #  parameter:
+  #    InputCollection:      @NAME@dEY_cal
+  #    OutputCollection:     @NAME@dEY_cal_gate
+  #    ValidTimeRange: @ValidTimeRange_dEY@ 
+  #    OutputTransparency:   0
+
+  - name: proc_@NAME@_E
+    type: art::TTimingChargeCalibrationProcessor
+    parameter:
+      InputCollection:      @NAME@E_raw
+      OutputCollection:     @NAME@E_cal
+      ChargeConverterArray: prm_@NAME@_E_ch2MeV
+      TimingConverterArray: prm_@NAME@_E_ch2ns
+      #InputIsDigital: 0
+
+  - name: proc_TTimeValidator
+    type: art::TTimeValidator
+    parameter:
+      InputCollection:      @NAME@E_cal
+      OutputCollection:     @NAME@E_cal_gate
+      ValidTimeRange: @ValidTimeRange_Eb@ 
+      OutputTransparency:   0
+
+# process telescope
+  - name: proc_@NAME@
+    type: art::TTelescopeProcessor
+    parameter:
+      InputCollection1:      @NAME@dEX_cal_gate
+      InputCollection2:      @NAME@dEY_cal
+      InputCollection3:      @NAME@E_cal_gate
+      OutputCollection:      @NAME@
+      IsDSSSD: true
+
+

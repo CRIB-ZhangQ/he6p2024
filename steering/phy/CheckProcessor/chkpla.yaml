@@ -1,0 +1,41 @@
+Anchor:
+
+ - &input ridf/@NAME@@NUM@.ridf
+ - &output output/@NAME@/@NUM@/chkpla@NAME@@NUM@.root
+ - &histout output/@NAME@/@NUM@/chkpla@NAME@@NUM@.hist.root
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: ridf
+    type: art::TRIDFEventStore
+    parameter:
+      OutputTransparency: 1
+      InputFiles:
+        - *input
+      SHMID: 0
+
+  - name: mapper
+    type: art::TMappingProcessor
+    parameter:
+      OutputTransparency: 1
+
+  - include: pla/pla.yaml
+
+
+### plastic raw Hist
+  - name: projection_pla
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/pla/chkpla.tmpl.yaml
+      Type:     art::TTreeProjection
+      Replace: |
+        plane: f3
+
+
+  - name: outputtree
+    type: art::TOutputTreeProcessor
+    parameter:
+      FileName:
+        - *output

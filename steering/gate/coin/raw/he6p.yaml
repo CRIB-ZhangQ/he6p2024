@@ -9,7 +9,7 @@ Processor:
     parameter:
       Definitions:
         - "nopileup; coin_raw@.GetEntriesFast()==1"
-        - "coin; coin.fTiming > 1800 && coin.fTiming<1840"
+        - "coin; coin.fTiming > 1000 && coin.fTiming<2500"
         - "beam_coin; coin_raw.fID == 1"
         - "rf_coin; abs(rf_cal_0.fTiming + 1.54196e3)<4.0*4.33145 || abs(rf_cal_0.fTiming + 1.47519e3)<4.*5.01248 || abs(rf_cal_0.fTiming + 1.40363e3)<4.*4.27355"
         - "catha_trigger; catha_cal.fTiming>-1650 && catha_cal.fTiming<-1500"

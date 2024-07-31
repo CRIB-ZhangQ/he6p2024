@@ -51,10 +51,10 @@ protected:
    Double_t fEbeam;
    Double_t fExci;
    Int_t fParticle;
-   Double_t fIntercept_x;
-   Double_t fIntercept_y;
-   Double_t fSlope_x;
-   Double_t fSlope_y;
+   DoubleVec_t fTargetX_mu;
+   DoubleVec_t fTargetX_sigma;
+   DoubleVec_t fTargetY_mu;
+   DoubleVec_t fTargetY_sigma;
 
    Bool_t fInputHasData;
 

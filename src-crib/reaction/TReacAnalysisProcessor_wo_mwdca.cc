@@ -19,6 +19,7 @@
 #include <TClass.h>
 #include <TClonesArray.h>
 #include <TMath.h>
+#include <TRandom.h>
 
 //#include "../geo/TDetectorParameter.h"
 //#include "../geo/TTargetParameter.h"
@@ -49,10 +50,14 @@ TReacAnalysisProcessor_wo_mwdca::TReacAnalysisProcessor_wo_mwdca()
     RegisterProcessorParameter("Qvalue", "reaction energy of the A(a,b)B reaction", fQvalue, 0.0);
     RegisterProcessorParameter("Exci", "the excited state of compound nucleus:a+A", fExci, -1.8);
     RegisterProcessorParameter("Particle", "the emitted particle of A(a,b)B reaction: b or B", fParticle, 0);//0: light particle, 1: heavy particle
-    RegisterProcessorParameter("Intercept_x", "Linear function: the intercept of mwdcb_x and targe_x", fIntercept_x, 1.22);
-    RegisterProcessorParameter("Slope_x", "Linear function: the Slope of mwdcb_x and target_x", fSlope_x, -0.99);
-    RegisterProcessorParameter("Intercept_y", "Linear function: the intercept of mwdcb_x and targe_x", fIntercept_y, 1.22);
-    RegisterProcessorParameter("Slope_y", "Linear function: the Slope of mwdcb_x and target_x", fSlope_y, -0.99);
+    RegisterProcessorParameter("TargetX_mu", "Fitting Parameters of targetX vs mwdcbX", fTargetX_mu, init_d_vec);
+    RegisterProcessorParameter("TargetX_sigma", "Uncerntainty of the fitting parameters of sigma of targetX", fTargetX_sigma, init_d_vec);
+    RegisterProcessorParameter("TargetY_mu", "Fitting Parameters of targetY vs mwdcbY", fTargetY_mu, init_d_vec);
+    RegisterProcessorParameter("TargetY_sigma", "Uncerntainty of the fitting parameters of sigma of targetY", fTargetY_sigma, init_d_vec);
+    //RegisterProcessorParameter("Intercept_x", "Linear function: the intercept of mwdcb_x and targe_x", fIntercept_x, 1.22);
+    //RegisterProcessorParameter("Slope_x", "Linear function: the Slope of mwdcb_x and target_x", fSlope_x, -0.99);
+    //RegisterProcessorParameter("Intercept_y", "Linear function: the intercept of mwdcb_x and targe_x", fIntercept_y, 1.22);
+    //RegisterProcessorParameter("Slope_y", "Linear function: the Slope of mwdcb_x and target_x", fSlope_y, -0.99);
 }
 
 TReacAnalysisProcessor_wo_mwdca::~TReacAnalysisProcessor_wo_mwdca() {
@@ -92,6 +97,7 @@ void TReacAnalysisProcessor_wo_mwdca::Init(TEventCollection *col) {
     fOutData = new TClonesArray("art::TReacAnalysisData");
     fOutData->SetName(fOutputColName);
     col->Add(fOutputColName, fOutData, fOutputIsTransparent);
+    gRandom->SetSeed(time(nullptr));
 }
 
 void TReacAnalysisProcessor_wo_mwdca::Process() {
@@ -129,8 +135,28 @@ void TReacAnalysisProcessor_wo_mwdca::Process() {
 
 
     // f3mwdc: CH2 target
-    Double_t tar_x = dcb_x * fSlope_x + fIntercept_x;
-    Double_t tar_y = dcb_y * fSlope_y + fIntercept_y;
+    //Double_t tar_x = dcb_x * fSlope_x + fIntercept_x;
+    //Double_t tar_y = dcb_y * fSlope_y + fIntercept_y;
+
+    Double_t tar_x = fTargetX_mu[0] + fTargetX_mu[1] * dcb_x + fTargetX_mu[2] * pow(dcb_x,2)
+                      + fTargetX_mu[3] * pow(dcb_x,3);
+    Double_t sigma_x = fTargetX_sigma[0] + fTargetX_sigma[1] * dcb_x
+                      + fTargetX_sigma[2] * pow(dcb_x,2) + fTargetX_sigma[3] * pow(dcb_x,3)
+                      + fTargetX_sigma[4] * pow(dcb_x,4) + fTargetX_sigma[5] * pow(dcb_x,5);
+    tar_x = gRandom->Gaus(tar_x, sigma_x);  
+    //Double_t check_x = gRandom->Gaus(tar_x, sigma_x);  
+
+    Double_t tar_y = fTargetY_mu[0] + fTargetY_mu[1] * dcb_y + fTargetY_mu[2] * pow(dcb_y,2)
+                      + fTargetY_mu[3] * pow(dcb_y,3);
+    Double_t sigma_y = fTargetY_sigma[0] + fTargetY_sigma[1] * dcb_y
+                      + fTargetY_sigma[2] * pow(dcb_y,2) + fTargetY_sigma[3] * pow(dcb_y,3)
+                      + fTargetY_sigma[4] * pow(dcb_y,4) + fTargetY_sigma[5] * pow(dcb_y,5)
+                      + fTargetY_sigma[6] * pow(dcb_y,6) + fTargetY_sigma[7] * pow(dcb_y,7);
+    tar_y = gRandom->Gaus(tar_y, sigma_y);  
+
+    //Double_t check_y = gRandom->Gaus(tar_y, sigma_y);  
+    //std::cout<<"sigma_x = "<<sigma_x<<", tar_x"<<tar_x<<", check_x = "<<check_x<<", sigma_y = "<<sigma_y<<", check_y = "<<check_y<<", tar_y = "<<tar_y<<std::endl;
+
     Double_t tar_z = 0.0;
     Double_t beam_fA = TMath::ATan((tar_x-dcb_x)/(tar_z-dcb_z));
     Double_t beam_fB = TMath::ATan((tar_y-dcb_y)/(tar_z-dcb_z));

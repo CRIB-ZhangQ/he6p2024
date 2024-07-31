@@ -1,0 +1,62 @@
+Anchor:
+ - &input output/coin/gate/phyrun/@RUNNAME@@RUNNUM@.root
+ - &output output/coin/gate/phyrun/proton/@TEL@/@RUNNAME@@RUNNUM@_proton_wo_mwdca.root
+ - &histout output/coin/gate/phyrun/proton/@TEL@/@RUNNAME@@RUNNUM@_proton.hist_wo_mwdca.root
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: root_eventstore
+    type: art::TTreeEventStore
+    parameter:
+      OutputTransparency: 1
+      FileName: *input
+      TreeName: tree
+
+  - name: analysis_proton_processor
+    type: art::TReacAnalysisProcessor_wo_mwdca
+    parameter:
+      InputCollection1:     mwdcb
+      InputCollection2:     @TEL@ 
+      OutputCollection:     PRA
+      Ebeam: 45.0
+      Mass: [1.007825031898, 6.01885889, 6.01885889, 1.007825031898]
+      Charge: [1, 2, 2, 1]
+      Qvalue: 0.0
+      Exci: -1.8
+      Particle: 1 #A(a,b)B: 1H(6He,6He)1H, 0:6He, 1: H 
+      TargetX_mu: [0.547488, 0.721638, 0.00131011, 0.000442998] 
+      TargetY_mu: [0.191587, 0.811508, -0.00215809, 0.000551554] 
+      TargetX_sigma: [1.31082, 0.00592114, -0.000843888, -8.9145e-05, -4.09369e-06, 2.30261e-07] 
+      TargetY_sigma: [1.76971, 0.045028, -0.014102, -0.000798284, 9.76652e-05, 4.58402e-06, -2.30443e-07, -8.28915e-09] 
+
+      #TargetX_sigma: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+      #TargetY_sigma: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+
+
+  - include: gate/coin/proton/@TEL@.yaml
+
+# telescope Hist
+  - name: projection_@TEL@
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/proton/@TEL@.yaml
+      OutputFilename: *histout
+      Type:     art::TTreeProjection
+
+  - name: outputtree
+    type: art::TOutputTreeProcessor
+    parameter:
+      FileName:
+        - *output
+
+# Only run0099 was used
+      #TargetX_mu: [0.620465, 0.726237, 0.00098441, 0.000422071] 
+      #TargetY_mu: [-0.129372, 0.807373, -0.00294197, 0.000566508] 
+      #TargetX_sigma: [1.24001, 0.00456761, -0.000549371, -8.90288e-05, -6.52709e-06, 2.18957e-07] 
+      #TargetY_sigma: [1.68404, 0.0608116, -0.0153038, -0.00104422, 0.0001135, 5.58912e-06, -2.93961e-07, -8.49059e-09] 
+      #Slope_x: 0.8337 
+      #Slope_y: 0.8978 
+      #Intercept_x: 0.6734 
+      #Intercept_y: -0.2756 

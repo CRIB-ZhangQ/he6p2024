@@ -1,0 +1,28 @@
+Processor:
+
+# telescope 4
+  - include:
+      name: check_tel_mux.inc.yaml
+      replace:
+        NAME: tel4
+        CATID_dEX: 40
+        CATID_dEY: 41
+        CATID_E:   42
+
+# telescope 5
+  - include:
+      name: check_tel_mux.inc.yaml
+      replace:
+        NAME: tel5
+        CATID_dEX: 50
+        CATID_dEY: 51
+        CATID_E:   52
+
+# telescope 6
+  - include:
+      name: check_tel_mux.inc.yaml
+      replace:
+        NAME: tel6
+        CATID_dEX: 60
+        CATID_dEY: 61
+        CATID_E:   62

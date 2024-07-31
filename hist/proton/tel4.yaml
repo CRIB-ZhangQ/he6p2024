@@ -1,6 +1,6 @@
 anchor:
   - &tel4_dEX ["PRA.fdEX", 200, 0., 5.]
-  - &tel4_Angle_cm ["PRA.fTheta_cm",90, 0., 180.]
+  - &tel4_Angle_cm ["PRA.fTheta_cm",180, 0., 180.]
   - &tel4_Angle_lab ["PRA.fTheta_lab", 90, 0., 90.]
   - &tel4_Etotal ["PRA.fEtotal", 200, 0., 30.]
   - &tel4_Etotal_proton ["PRA.fEtotal", 300, 0., 30.]

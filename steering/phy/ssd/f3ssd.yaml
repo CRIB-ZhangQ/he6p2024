@@ -1,0 +1,72 @@
+Processor:
+# telescope 1
+  - include:
+      name: ssd/tel.inc.yaml
+      replace:
+        NAME: tel1
+        CATID_dEX: 10
+        CATID_dEY: 11
+        CATID_E:   12
+        ValidTimeRange_dEX: [-100, 100, 0]
+        ValidTimeRange_Eb: [50, 250, 0]
+
+# telescope 2
+  - include:
+      name: ssd/tel.inc.yaml
+      replace:
+        NAME: tel2
+        CATID_dEX: 20
+        CATID_dEY: 21
+        CATID_E:   22
+        ValidTimeRange_dEX: [0, 130, 0]
+        ValidTimeRange_Eb: [100, 180, 0]
+
+# telescope 3
+  - include:
+      name: ssd/tel.inc.yaml
+      replace:
+        NAME: tel3
+        CATID_dEX: 30
+        CATID_dEY: 31
+        CATID_E:   32
+        ValidTimeRange_dEX: [150, 350, 0]
+        ValidTimeRange_Eb: [80, 170, 0]
+
+# telescope 4
+  - include:
+      name: ssd/tel_mux.inc.yaml
+      replace:
+        NAME: tel4
+        RUNNAME: @RUNNAME@
+        RUNNUM: @RUNNUM@
+        CATID_dEX: 40
+        CATID_dEY: 41
+        CATID_E:   42
+        ValidTimeRange_dEX: [0, 150, 0]
+        ValidTimeRange_Eb: [60, 140, 0]
+
+# telescope 5
+  - include:
+      name: ssd/tel_mux.inc.yaml
+      replace:
+        NAME: tel5
+        RUNNAME: @RUNNAME@
+        RUNNUM: @RUNNUM@
+        CATID_dEX: 50
+        CATID_dEY: 51
+        CATID_E:   52
+        ValidTimeRange_dEX: [0, 150, 0]
+        ValidTimeRange_Eb: [0, 250, 0]
+
+# telescope 6
+  - include:
+      name: ssd/tel_mux.inc.yaml
+      replace:
+        NAME: tel6
+        RUNNAME: @RUNNAME@
+        RUNNUM: @RUNNUM@
+        CATID_dEX: 60
+        CATID_dEY: 61
+        CATID_E:   62
+        ValidTimeRange_dEX: [50, 250, 0]
+        ValidTimeRange_Eb: [0, 250, 0]

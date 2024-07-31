@@ -1,0 +1,39 @@
+Processor:
+  - name: proc_gateinit
+    type: art::TGateArrayInitializer
+    parameter:
+      OutputTransparency: 1
+
+  - name: proc_gate
+    type: art::TTreeFormulaGateProcessor
+    parameter:
+      Definitions: # for tel4
+        - "tel4; tel4@.GetEntriesFast()>0"
+        - "tel4_energy; abs(sqrt(tel4.fEtotal*tel4.fdEX)-3.5)<2 && (tel4.fEtotal-tel4.fdEX)>0.2"
+        - "tel4_timing; tel4.fTiming > 25  && tel4.fTiming < 160"
+      OutputTransparency: 1
+      Verbose: 1
+
+  - name: tel4_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: tel4
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: tel4_energy_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: tel4_energy
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1
+
+  - name: tel4_timing_gate
+    type: art::TGateStopProcessor
+    parameter:
+      GateName: tel4_timing
+      OutputTransparency: 1
+      StopIf: 0
+      Verbose: 1

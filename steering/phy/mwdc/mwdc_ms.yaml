@@ -1,0 +1,70 @@
+Processor:
+  - name: proc_mwdcb_cath_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name:     prm_mwdcb_cath_ch2ns
+      Type:     art::TAffineConverter
+      FileName: prm/mwdc/mwdcb/ch2ns_cath.dat
+      OutputTransparency: 1
+
+  - name: proc_trig_raw
+    type: art::TTimingChargeMappingProcessor
+    parameter:
+      CatID:              12
+      TimingTypeID:       0
+      OutputCollection:   trig_raw
+      OutputTransparency: 0
+
+  - name: proc_trig_cal
+    type: art::TTimingChargeCalibrationProcessor
+    parameter:
+      InputCollection:      trig_raw
+      OutputCollection:     trig_cal
+      TimingConverterArray: prm_mwdcb_cath_ch2ns
+      OutputTransparency:   0
+
+###### MWDCa
+  - include:
+      name: time2dt.inc.yaml
+      replace:
+        CATID: 6
+        NAME: mwdca
+        TREDET: trig_cal
+        TREFID: 0
+
+  - include:
+      name:  xxyy.inc.yaml
+      replace:
+        NAME: mwdca
+
+  - include:
+      name:  xxyy_calib.inc.yaml
+      replace:
+        NAME: mwdca
+        TGATE: [-1030.,-950.]
+        QGATE: [300.,1200]
+
+##### MWDCb
+
+  - include:
+      name: time2dt.inc.yaml
+      replace:
+        CATID: 7
+        NAME: mwdcb
+        TREDET: trig_cal
+        TREFID: 0
+
+  - include:
+      name:  xxyy.inc.yaml
+      replace:
+        NAME: mwdcb
+
+  - include:
+      name:  xxyy_calib.inc.yaml
+      replace:
+        NAME: mwdcb
+        TGATE: [-1040.,-980.]
+        QGATE: [300.,1100]
+
+########
+  - include: mwdctrack.yaml

@@ -1,0 +1,47 @@
+Anchor:
+ - &input output/coin/gate/phyrun/@RUNNAME@@RUNNUM@.root
+ - &output output/coin/gate/phyrun/proton/@TEL@/@RUNNAME@@RUNNUM@_proton.root
+ - &histout output/coin/gate/phyrun/proton/@TEL@/@RUNNAME@@RUNNUM@_proton.hist.root
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: root_eventstore
+    type: art::TTreeEventStore
+    parameter:
+      OutputTransparency: 1
+      FileName: *input
+      TreeName: tree
+
+
+  - name: analysis_proton_processor
+    type: art::TReacAnalysisProcessor
+    parameter:
+      #InputCollection1:     mwdca
+      InputCollection2:     mwdcb
+      InputCollection3:     f3mwdc 
+      InputCollection4:     @TEL@ 
+      OutputCollection:     PRA
+      Ebeam: 45.0
+      Mass: [1.007825031898, 6.01885889, 6.01885889, 1.007825031898]
+      Charge: [1, 2, 2, 1]
+      Qvalue: 0.0
+      Exci: -1.8
+      Particle: 1 #A(a,b)B: 1H(6He,6He)1H, 0:6He, 1: H 
+
+  - include: gate/coin/proton/@TEL@.yaml
+
+# telescope Hist
+  - name: projection_@TEL@
+    type: art::TTreeProjectionProcessor
+    parameter:
+      FileName: hist/proton/@TEL@.yaml
+      OutputFilename: *histout
+      Type:     art::TTreeProjection
+
+  - name: outputtree
+    type: art::TOutputTreeProcessor
+    parameter:
+      FileName:
+        - *output

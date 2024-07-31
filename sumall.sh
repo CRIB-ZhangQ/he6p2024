@@ -7,4 +7,4 @@ tel4=/home/zq/art_analysis/he6p2024/he6p2024/output/coin/gate/phyrun/proton/tel4
 tel5=/home/zq/art_analysis/he6p2024/he6p2024/output/coin/gate/phyrun/proton/tel5/run0099_proton.hist.root
 tel6=/home/zq/art_analysis/he6p2024/he6p2024/output/coin/gate/phyrun/proton/tel6/run0099_proton.hist.root
 
-hadd elastic_phy.root $tel1 $tel2 $tel3 $tel4 $tel5 $tel6
+hadd elastic_phy_0099.root $tel1 $tel2 $tel3 $tel4 $tel5 $tel6

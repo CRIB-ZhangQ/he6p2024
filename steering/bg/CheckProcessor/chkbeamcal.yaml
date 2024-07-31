@@ -1,0 +1,38 @@
+Anchor:
+
+ #- &input ridf/@NAME@@NUM@.ridf
+ - &output output/@NAME@/@NUM@/chkssd@NAME@@NUM@.root
+ - &histout output/@NAME@/@NUM@/chkssd@NAME@@NUM@.hist.root
+
+ - &dssdtmpl hist/ssd/dE_XY.tmpl.yaml
+#If you want to see each ch data for DSSD:
+# - &dssdtmpl hist/ssd/dE_XY_allch.tmpl.yaml
+ - &muxtmpl hist/ssd/mux.tmpl.yaml
+
+Processor:
+  - name: timer
+    type: art::TTimerProcessor
+
+  - name: ridf
+    type: art::TRIDFEventStore
+    parameter:
+      OutputTransparency: 1
+      MaxEventNum: 10000
+      InputFiles:
+        - ridf/run0182.ridf
+        - ridf/run0183.ridf 
+
+  - name: mapper
+    type: art::TMappingProcessor
+    parameter:
+      OutputTransparency: 1
+
+  #- include: ssd/f3ssd_raw.yaml
+  - include: ssd/f3ssd.yaml
+
+
+  - name: outputtree
+    type: art::TOutputTreeProcessor
+    parameter:
+      FileName:
+        - *output

@@ -1,0 +1,128 @@
+Processor:
+  - name: proc_mwdca_cath_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name:     prm_mwdca_cath_ch2ns
+      Type:     art::TAffineConverter
+      FileName: prm/mwdc/mwdca/ch2ns_cath.dat
+      OutputTransparency: 1
+
+  - name: proc_catha_raw
+    type: art::TTimingChargeMappingProcessor
+    parameter:
+      CatID:              8
+      TimingTypeID:       0
+      OutputCollection:   catha_raw
+      OutputTransparency: 0
+
+  - name: proc_catha_cal
+    type: art::TTimingChargeCalibrationProcessor
+    parameter:
+      InputCollection:      catha_raw
+      OutputCollection:     catha_cal
+      TimingConverterArray: prm_mwdca_cath_ch2ns
+      OutputTransparency:   0
+
+  - name: proc_TTimeValidator
+    type: art::TTimeValidator
+    parameter:
+      InputCollection:      catha_cal
+      OutputCollection:     catha_cal_gate
+      ValidTimeRange: [-1640,-1480, 0]
+      OutputTransparency:   0
+
+  - name: proc_mwdcb_cath_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name:     prm_mwdcb_cath_ch2ns
+      Type:     art::TAffineConverter
+      FileName: prm/mwdc/mwdcb/ch2ns_cath.dat
+      OutputTransparency: 1
+
+  - name: proc_cathb_raw
+    type: art::TTimingChargeMappingProcessor
+    parameter:
+      CatID:              9
+      TimingTypeID:       0
+      OutputCollection:   cathb_raw
+      OutputTransparency: 0
+
+  - name: proc_cathb_cal
+    type: art::TTimingChargeCalibrationProcessor
+    parameter:
+      InputCollection:      cathb_raw
+      OutputCollection:     cathb_cal
+      TimingConverterArray: prm_mwdcb_cath_ch2ns
+      OutputTransparency:   0
+
+  - name: proc_TTimeValidator
+    type: art::TTimeValidator
+    parameter:
+      InputCollection:      cathb_cal
+      OutputCollection:     cathb_cal_gate
+      ValidTimeRange: [-1640,-1490, 0]
+      OutputTransparency:   0
+
+  - name: proc_mwdcb_trigger_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name:     prm_mwdcb_trigger_ch2ns
+      Type:     art::TAffineConverter
+      FileName: prm/mwdc/mwdcb/ch2ns_cath.dat
+      OutputTransparency: 1
+
+
+###### MWDCa
+  - include:
+      name: time2dt.inc.yaml
+      replace:
+        CATID: 6
+        NAME: mwdca
+        #TREDET: catha_cal
+        TREDET: catha_cal_gate
+        TREFID: 0
+        ValidTimeRange: [-1720,-1500, 0]
+
+  - include:
+      #name:  xyy.inc.yaml
+      name:  xxyy.inc.yaml
+      replace:
+        NAME: mwdca
+
+  - include:
+      name:  xxyy_calib.inc.yaml
+      replace:
+        NAME: mwdca
+        TGATE: [-85.,0.]
+        QGATE: [0.,1500]
+        #TGATE: [-84.,-20.]
+        #QGATE: [0.,1000]
+
+##### MWDCb
+  - include:
+      name: time2dt.inc.yaml
+      replace:
+        CATID: 7
+        NAME: mwdcb
+        #TREDET: cathb_cal
+        TREDET: cathb_cal_gate
+        TREFID: 0
+        ValidTimeRange: [-1720,-1500, 0]
+
+  - include:
+      name:  xxyy.inc.yaml
+      replace:
+        NAME: mwdcb
+
+  - include:
+      name:  xxyy_calib.inc.yaml
+      replace:
+        NAME: mwdcb
+        TGATE: [-90.,-20.]
+        QGATE: [0.,1800]
+        #TGATE: [-80.,-38.]
+        #QGATE: [0.,1000]
+
+
+#########
+  - include: mwdctrack.yaml

@@ -1,0 +1,82 @@
+Processor:
+# ch2MeV parameters
+  - name: proc_@NAME@_dEX_ch2MeV
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEX_ch2MeV
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2MeV_dEX.dat
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_dEY_ch2MeV
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEY_ch2MeV
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2MeV_dEY.dat
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_E_ch2MeV
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_E_ch2MeV
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2MeV_E.dat
+      OutputTransparency: 0 
+
+# ch2ns parameters
+  - name: proc_@NAME@_dEX_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEX_ch2ns
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2ns_dEX.dat
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_dEY_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEY_ch2ns
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2ns_dEY.dat
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_E_ch2ns
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_E_ch2ns
+      Type: art::TAffineConverter
+      FileName: prm/ssd/@NAME@/ch2ns_E.dat
+      OutputTransparency: 1
+
+
+# MUX position parameters
+  - name: proc_@NAME@_dEX_position
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEX_position
+      Type: art::TMUXPositionConverter
+      FileName: prm/ssd/@NAME@/pos_dEX/current
+      OutputTransparency: 1
+
+  - name: proc_@NAME@_dEY_position
+    type: art::TParameterArrayLoader
+    parameter:
+      Name: prm_@NAME@_dEY_position
+      Type: art::TMUXPositionConverter
+      FileName: prm/ssd/@NAME@/pos_dEY/current
+      OutputTransparency: 1
+
+
+# data mapping
+  - name: proc_@NAME@_dEX_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         @CATID_dEX@ 
+      OutputCollection: @NAME@dEX_raw
+
+  - name: proc_@NAME@_dEY_raw
+    type: art::TMUXDataMappingProcessor
+    parameter:
+      CatID:         @CATID_dEY@
+      OutputCollection: @NAME@dEY_raw

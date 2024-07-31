@@ -18,3 +18,8 @@ ana/
 build/
 *.root
 *.png
+mwdcb_target/target_X/.png
+mwdcb_target/target_Y/.png
+mwdcb_target/backup
+script/*.png
+elastic/*.png
