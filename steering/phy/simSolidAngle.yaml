@@ -39,7 +39,7 @@ Processor:
     type: art::TCounterEventStore
     parameter:
       OutputTransparency: 0
-      MaxLoop: 1000000
+      MaxLoop: 100000000
 
   - name: beam_generator
     type: art::TRandomBeamGenerator
@@ -121,8 +121,8 @@ Processor:
     parameter:
       InputCollection_cm: light_cm
       InputCollection_det: telescope
-      #Nbin_angle: 180 
-      Nbin_angle: 90 
+      Nbin_angle: 180 
+      #Nbin_angle: 180
       range_angle: [0., 180.]
       #Nbin_angle: 90 
       #range_angle: [0., 90.]
